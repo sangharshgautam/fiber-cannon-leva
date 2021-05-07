@@ -1,10 +1,8 @@
 import * as React from 'react'
-import { Object3D, Group, Camera } from 'three'
+import { Object3D, Camera } from 'three'
 import { useThree, ReactThreeFiber } from '@react-three/fiber'
 import { TransformControls as TransformControlsImpl } from 'three-stdlib'
 import pick from 'lodash.pick'
-import omit from 'lodash.omit'
-import {MutableRefObject} from "react";
 
 export type MyTransformControls = ReactThreeFiber.Object3DNode<TransformControlsImpl, typeof TransformControlsImpl>
 
@@ -52,7 +50,6 @@ export const MyTransformControls = React.forwardRef<TransformControlsImpl, Props
 
     const { camera, ...rest } = props
     const transformProps = pick(rest, transformOnlyPropNames)
-    const objectProps = omit(rest, transformOnlyPropNames)
 
     const gl = useThree(({ gl }) => gl)
     const defaultCamera = useThree(({ camera }) => camera)
@@ -62,7 +59,6 @@ export const MyTransformControls = React.forwardRef<TransformControlsImpl, Props
 
     const [controls] = React.useState(() => new TransformControlsImpl(explCamera, gl.domElement))
 
-    const group = React.useRef<Group>()
     React.useLayoutEffect(() => void controls?.attach(object as Object3D), [object, controls])
 
     React.useEffect(() => {

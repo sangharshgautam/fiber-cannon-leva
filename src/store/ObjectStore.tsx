@@ -11,19 +11,32 @@ import produce from "immer";
 export interface ScenaData extends State {
     objects: ObjectData[]
 }
-
 export interface ObjectData extends State {
     uuid: string;
+    type: 'Cube' | 'NPoint';
+    castShadow: boolean;
+    transform: ObjectTransform
+    geometry: ObjectGeometry,
+    material: ObjectMaterial,
+    physics: ObjectPhysics
+}
+export interface ObjectTransform {
     position: [number, number, number],
     rotation: [number, number, number],
     scale: [number, number, number],
-    material: ObjectMaterial
 }
-export interface ObjectGeometry {
 
+export interface ObjectPhysics {
+    mass: number
+}
+
+export interface ObjectGeometry {
+    args: []
 }
 export interface ObjectMaterial {
     color: string;
+    wireframe: boolean;
+    reflectivity: number;
 }
 type StateCreator<
     T extends State,
@@ -37,38 +50,22 @@ const immer = <T extends State, U extends State>(config: StateCreator<T, (fn: (d
 const combine = <PrimaryState extends State, SecondaryState extends State>(
     initialState: PrimaryState,
     create: (
-        set: SetState<PrimaryState>,
-        get: GetState<PrimaryState>,
-        api: StoreApi<PrimaryState>
+        set: SetState<PrimaryState & SecondaryState>,
+        get: GetState<PrimaryState & SecondaryState>,
+        api: StoreApi<PrimaryState & SecondaryState>
     ) => SecondaryState
 ): StateCreator<PrimaryState & SecondaryState> => (set, get, api) =>
     Object.assign(
         {},
         initialState,
         create(
-            set as SetState<PrimaryState>,
-            get as GetState<PrimaryState>,
-            api as StoreApi<PrimaryState>
+            set as SetState<PrimaryState & SecondaryState>,
+            get as GetState<PrimaryState & SecondaryState>,
+            api as StoreApi<PrimaryState & SecondaryState>
         )
     );
 
-const withImmer = <PrimaryState extends State, SecondaryState extends State>(
-    initialState: PrimaryState,
-    createState: (
-        set: (fn: (draftState: PrimaryState) => void) => void,
-        get: GetState<PrimaryState>,
-        api: StoreApi<PrimaryState>
-    ) => SecondaryState
-): StateCreator<PrimaryState & SecondaryState> => (set, get, api) =>
-    Object.assign(
-        {},
-        initialState,
-        createState(
-            (fn) => set((baseState) => produce(baseState, fn)),
-            get as GetState<PrimaryState>,
-            api as StoreApi<PrimaryState>
-        )
-    );
+
 
 const combineAndImmer = <
     PrimaryState extends State,
@@ -76,7 +73,7 @@ const combineAndImmer = <
     >(
     initialState: PrimaryState,
     config: StateCreator<
-        PrimaryState,
+        PrimaryState & SecondaryState,
         (fn: (draft: PrimaryState) => void) => void,
         SecondaryState
         >
@@ -87,20 +84,76 @@ const combineAndImmer = <
 const initialState = {
     objects: [{
         uuid: uuidv4(),
-        position: [4.26, -4.01, 5.51],
-        rotation: [0.2, 0, 0],
-        scale: [1, 1, 7],
+        type: 'Cube',
+        castShadow: true,
+        transform: {
+            position: [4.26, -4.01, 5.51],
+            rotation: [0.2, 0, 0],
+            scale: [1, 1, 7],
+        },
+        geometry: {
+            args: [ 1, 1, 1]
+        },
         material: {
-            color: '#ce1a1a'
+            color: '#ce1a1a',
+            wireframe: false,
+            reflectivity: 0.5
+        },
+        physics: {
+            mass: 1
         }
     },
     {
         uuid: uuidv4(),
-        position: [4.32, -0.68, 5.46],
-        rotation: [0, 0, 0],
-        scale: [1, 1, 1],
+        type: 'Cube',
+        castShadow: false,
+        transform: {
+            position: [4.32, -0.68, 5.46],
+            rotation: [0, 0, 0],
+            scale: [1, 1, 1],
+        },
+        geometry: {
+            args: [ 2, 2, 2]
+        },
         material: {
-            color: '#4316ba'
+            color: '#4316ba',
+            wireframe: true,
+            reflectivity: 1.0
+        },
+        physics: {
+            mass: 2
+        }
+    },
+    {
+        uuid: uuidv4(),
+        type: 'NPoint',
+        castShadow: false,
+        transform: {
+            position: [1, 1, 1],
+            rotation: [0, 0, 0],
+            scale: [0.2, 0.2, 0.2],
+        },
+        geometry: {
+            args: [
+                {x: 5, y: -10},
+                {x: 6.986693307950612, y: -8},
+                {x: 8.894183423086506, y: -6},
+                {x: 10.646424733950354, y: -4},
+                {x: 12.173560908995228, y: -2},
+                {x: 13.414709848078965, y: 0},
+                {x: 14.320390859672264, y: 2},
+                {x: 14.854497299884603, y: 4},
+                {x: 14.99573603041505, y: 6},
+                {x: 14.738476308781951, y: 8}
+            ]
+        },
+        material: {
+            color: '#4316ba',
+            wireframe: false,
+            reflectivity: 1.0
+        },
+        physics: {
+            mass: 2
         }
     }]
 };

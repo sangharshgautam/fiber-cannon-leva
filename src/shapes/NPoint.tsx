@@ -3,12 +3,13 @@ import React, {useEffect, useState} from "react";
 import {useControls} from "leva";
 import * as THREE from 'three';
 import {Html} from "@react-three/drei";
-import {Color} from "three";
+import {Color, Vector2} from "three";
 import {ObjectData} from "../store/ObjectStore";
 
 // @ts-ignore
-function Cube(objectData: ObjectData) {
+function NPoint(objectData: ObjectData) {
     const [args, setArgs] = useState<[]>(objectData.geometry.args);
+
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
     const [scale, setScale] = useState(objectData.transform.scale);
@@ -22,7 +23,7 @@ function Cube(objectData: ObjectData) {
 
     const[reflectivity, setReflectivity] = useState(objectData.material.reflectivity);
 
-    const [ref, api] = useBox(() => ({ args, mass, position, rotation, scale }));
+    const [ref, api] = useBox(() => ({ mass, position, rotation, scale }));
     const [hovered, setHover] = useState(false)
 
 
@@ -31,6 +32,8 @@ function Cube(objectData: ObjectData) {
         api.position.set(rotation[0], rotation[1], rotation[2])
         api.mass?.set(mass);
     }, [position, rotation, mass]);
+    const [points, setPoints] = useState(args.map(arg => arg as Vector2));
+
     return (
         <mesh name={"Cube"} castShadow={castShadow} position={position} rotation={rotation} scale={scale} userData={{
             controls: {
@@ -107,8 +110,9 @@ function Cube(objectData: ObjectData) {
             }
         }}
               onPointerOver={() => setHover(true)}
-              onPointerOut={() => setHover(false)}>
-            <boxBufferGeometry args={args}/>
+              onPointerOut={() => setHover(false)}
+        >
+            <latheBufferGeometry args={[points]}/>
             <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity}></meshPhysicalMaterial>
             <Html distanceFactor={10} style={{ pointerEvents: "none", display: hovered ? "block" : "none" }}>
                 <div className="content">
@@ -118,4 +122,4 @@ function Cube(objectData: ObjectData) {
         </mesh>
     )
 }
-export default  Cube;
+export default  NPoint;

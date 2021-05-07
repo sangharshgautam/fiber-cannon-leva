@@ -31,17 +31,21 @@ canvas {
 
 .content {
   padding-top: 10px;
-  transform: translate3d(200%, 0, 0);
-  text-align: right;
+  transform: translate3d(50%, 0, 0);
+  text-align: left;
+  background: #202035;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
 }
 
-.content::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  width: 190px;
-  transform: translate3d(-120px, 0, 0);
-  height: 1px;
-  background: white;
-}
+/*.content::after {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  content: "";*/
+/*  width: 190px;*/
+/*  transform: translate3d(-120px, 0, 0);*/
+/*  height: 1px;*/
+/*  background: white;*/
+/*}*/
