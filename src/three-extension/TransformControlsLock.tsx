@@ -38,7 +38,7 @@ const TransformControlsLock = () => {
 
     const { raycaster, mouse, camera, scene } = useThree();
     useEffect(() => {
-        if(transformControls.current) {
+        if(transformControls.current && orbitControls.current) {
             const {current: controls} = transformControls;
             const callback = (event: any) => {
                 orbitControls.current.enabled = !event.value;
@@ -58,7 +58,7 @@ const TransformControlsLock = () => {
         }
     })
 
-    const [, setTransform] = useControls('Transform', () => ({
+    const [, setObject] = useControls('Object', () => ({
         castShadow: {
             label: 'Cast Shadow',
             value: false,
@@ -66,120 +66,36 @@ const TransformControlsLock = () => {
                 selectedObject?.userData.controls.castShadow.onChange(value);
             },
             render: (get) => selectedObject != null
-        },
-        position: {
-            label: 'Position',
-            value: [0, 0, 0],
-            onChange: (value: any) => {
-                selectedObject?.userData.controls.position.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        },
-        rotation: {
-            label: 'Rotation',
-            value: [0, 0, 0],
-            onChange: (value: any) => {
-                selectedObject?.userData.controls.rotation.onChange(value);
-            },
-            render: (get) => selectedObject != null
-
-        },
-        scale: {
-            label: 'Scale',
-            hint: 'Scale',
-            value: [0, 0, 0],
-            min: 0.1,
-            step: 0.2,
-            onChange: (value: any) => {
-                selectedObject?.userData.controls.scale.onChange(value);
-            },
-            render: (get) => selectedObject != null
         }
     }), [selectedObject]);
 
-    const [changeCount, setChangeCount] = useState(0);
-    const [args, setArgs] = useState([]);
 
-    const reducer = (control: any, _: any, i: number) => {
-        return Object.assign(control, { [`test${i}`]: {
-            label: `test${i}`,
-            value: _,
-            onChange: (value: Vector2) => {
-                // @ts-ignore
-                args[i] = value;
-                selectedObject?.userData.controls.geometry.args.onChange(args);
-            }
-        }});
-    }
-    const inputs = args.reduce(reducer, {});
-    useControls('Geometry', inputs, [args, changeCount, setChangeCount]);
-    useEffect(() => {
-        console.log(args);
-        if(selectedObject){
-            console.log(args);
-            selectedObject.userData.controls.geometry.args.onChange(args);
-        }
-    }, [args, selectedObject])
+    const transform = selectedObject?.userData.controls.transform || {};
+    const [, setTransform] = useControls('Transform', () => (transform), [selectedObject]);
 
-    const [, setMaterial] = useControls('Material', () => ({
-        color: {
-            label: 'Color',
-            value: '#fff',
-            onChange: (value: any) => {
-                selectedObject?.userData.controls.material.color.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        },
-        wireframe: {
-            label: 'Wireframe',
-            value: false,
-            onChange: (value: boolean) => {
-                selectedObject?.userData.controls.material.wireframe.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        },
-        reflectivity: {
-            label: 'Reflectivity',
-            value: 0.5,
-            min: 0.1,
-            max: 1.0,
-            step: 0.1,
-            onChange: (value: number) => {
-                selectedObject?.userData.controls.material.reflectivity.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        }
-    }), [selectedObject]);
+    const geometry = selectedObject?.userData.controls.geometry || {};
+    const [, setGeometry] = useControls('Geometry', () => (geometry), [selectedObject]);
 
-    const [, setPhysics] = useControls('Physics', () => ({
-        mass: {
-            label: 'Mass',
-            value: 1,
-            min: 0,
-            max: 10,
-            step: 1,
-            suffix: 'kg',
-            onChange: (value: any) => {
-                selectedObject?.userData.controls.physics.mass.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        }
-    }), [selectedObject]);
+    const material = selectedObject?.userData.controls.material || {};
+    const [, setMaterial] = useControls('Material', () => (material), [selectedObject]);
 
-    useControls('Labels', {
-        label: {
-            image: ''
-        },
-        Apply: button(() => alert('click'))
-    });
+    const physics = selectedObject?.userData.controls.physics || {};
+    const [, setPhysics] = useControls('Physics', () => (physics), [selectedObject]);
+
+    // useControls('Labels', {
+    //     label: {
+    //         image: ''
+    //     },
+    //     Apply: button(() => alert('click'))
+    // });
 
     useEffect(() => {
         if(selectedObject && selectedObject.userData.controls){
-            setTransform({position: selectedObject.userData.controls.position.value});
-            setTransform({rotation: selectedObject.userData.controls.rotation.value});
-            setTransform({scale: selectedObject.userData.controls.scale.value});
-            setTransform({castShadow: selectedObject.userData.controls.castShadow.value});
-            setArgs(selectedObject.userData.controls.geometry.args.value);
+            setObject({castShadow: selectedObject.userData.controls.castShadow.value});
+            setTransform({position: selectedObject.userData.controls.transform.position.value});
+            setTransform({rotation: selectedObject.userData.controls.transform.rotation.value});
+            setTransform({scale: selectedObject.userData.controls.transform.scale.value});
+            setGeometry({args: selectedObject.userData.controls.geometry.args.value});
             setMaterial({ color: selectedObject.userData.controls.material.color.value});
             setMaterial({ wireframe: selectedObject.userData.controls.material.wireframe.value});
             setPhysics({mass: selectedObject.userData.controls.physics.mass.value});

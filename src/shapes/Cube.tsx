@@ -41,33 +41,36 @@ function Cube(objectData: ObjectData) {
                         setCastShadow(value);
                     }
                 },
-                position: {
-                    label: 'Position',
-                    value: position,
-                    onChange: (value: [number, number, number]) => {
-                        setPosition(value);
-                    }
-                },
-                rotation: {
-                    label: 'Rotation',
-                    value: rotation,
-                    onChange: (value: [number, number, number]) => {
-                        setRotation(value);
-                    }
-                },
-                scale: {
-                    label: 'Scale',
-                    value: scale,
-                    onChange: (value: [number, number, number]) => {
-                        setScale(value);
+                transform: {
+                    position: {
+                        label: 'Position',
+                        value: position,
+                        onChange: (value: [number, number, number]) => {
+                            setPosition(value);
+                        }
+                    },
+                    rotation: {
+                        label: 'Rotation',
+                        value: rotation,
+                        onChange: (value: [number, number, number]) => {
+                            setRotation(value);
+                        }
+                    },
+                    scale: {
+                        label: 'Scale',
+                        value: scale,
+                        onChange: (value: [number, number, number]) => {
+                            setScale(value);
+                        }
                     }
                 },
                 geometry: {
                     args: {
-                        label: 'Points',
+                        label: 'Dimension',
                         value: args,
+                        min: 0.1,
+                        step: 0.2,
                         onChange: (value: any) => {
-                            console.log(value);
                             setArgs(value);
                         }
                     }

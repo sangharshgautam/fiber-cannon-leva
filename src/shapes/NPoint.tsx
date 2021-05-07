@@ -8,7 +8,7 @@ import {ObjectData} from "../store/ObjectStore";
 
 // @ts-ignore
 function NPoint(objectData: ObjectData) {
-    const [args, setArgs] = useState<[]>(objectData.geometry.args);
+    const [args, setArgs] = useState<Vector2[]>(objectData.geometry.args);
 
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
@@ -44,25 +44,27 @@ function NPoint(objectData: ObjectData) {
                         setCastShadow(value);
                     }
                 },
-                position: {
-                    label: 'Position',
-                    value: position,
-                    onChange: (value: [number, number, number]) => {
-                        setPosition(value);
-                    }
-                },
-                rotation: {
-                    label: 'Rotation',
-                    value: rotation,
-                    onChange: (value: [number, number, number]) => {
-                        setRotation(value);
-                    }
-                },
-                scale: {
-                    label: 'Scale',
-                    value: scale,
-                    onChange: (value: [number, number, number]) => {
-                        setScale(value);
+                transform: {
+                    position: {
+                        label: 'Position',
+                        value: position,
+                        onChange: (value: [number, number, number]) => {
+                            setPosition(value);
+                        }
+                    },
+                    rotation: {
+                        label: 'Rotation',
+                        value: rotation,
+                        onChange: (value: [number, number, number]) => {
+                            setRotation(value);
+                        }
+                    },
+                    scale: {
+                        label: 'Scale',
+                        value: scale,
+                        onChange: (value: [number, number, number]) => {
+                            setScale(value);
+                        }
                     }
                 },
                 geometry: {
@@ -70,7 +72,6 @@ function NPoint(objectData: ObjectData) {
                         label: 'Points',
                         value: args,
                         onChange: (value: any) => {
-                            console.log(value);
                             setArgs(value);
                         }
                     }

@@ -155,7 +155,8 @@ const initialState = {
         physics: {
             mass: 2
         }
-    }]
+    }
+    ]
 };
 export const useObjectStore = create(
     combineAndImmer(initialState, (set) => ({
