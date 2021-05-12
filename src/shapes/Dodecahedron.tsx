@@ -25,7 +25,7 @@ const Dodecahedron = ({ time,...props }) => {
     //         value: '#fff'
     //     }
     // });
-    const mass = 1;
+    const [mass, setMass] = useState(1);
     const [ref] = useSphere(() => ({ mass,args: radius, ...props }));
 
     const [hovered, setHover] = useState(false)
@@ -44,24 +44,17 @@ const Dodecahedron = ({ time,...props }) => {
         roughness: 0.1
     })
     return (
-        <mesh ref={ref} {...props} raycast={meshBounds} userData={{
-            controls: [
-                {
-                    title: 'radius',
-                    value: 2
-                }
-            ]
-        }}
-              onPointerOver={() => setHover(true)}
-              onPointerOut={() => setHover(false)}
-              material={hovered ? materialHover : materialDefault} >
+        <mesh ref={ref} {...props} raycast={meshBounds}
+              // onPointerOver={() => setHover(true)}
+              // onPointerOut={() => setHover(false)}
+              name="Dodecahedron" material={hovered ? materialHover : materialDefault} >
             <dodecahedronBufferGeometry args={[hovered ? (radius+radius/10): radius]}></dodecahedronBufferGeometry>
-            <Html scale={10} style={{ pointerEvents: "none", display: hovered ? "block" : "none" }}>
-                <div className="content">
-                    Suspense <br />
-                    {mass}ms
-                </div>
-            </Html>
+            {/*<Html scale={10} style={{ pointerEvents: "none", display: hovered ? "block" : "none" }}>*/}
+            {/*    <div className="content">*/}
+            {/*        Suspense <br />*/}
+            {/*        {mass}ms*/}
+            {/*    </div>*/}
+            {/*</Html>*/}
         </mesh>
     )
 

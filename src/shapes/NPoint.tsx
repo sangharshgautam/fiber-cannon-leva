@@ -8,7 +8,7 @@ import {ObjectData} from "../store/ObjectStore";
 
 // @ts-ignore
 function NPoint(objectData: ObjectData) {
-    const [args, setArgs] = useState<Vector2[]>(objectData.geometry.args);
+    const [args, setArgs] = useState<Vector2[]>(objectData.geometry.args as Vector2[]);
 
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
@@ -17,11 +17,12 @@ function NPoint(objectData: ObjectData) {
     const [castShadow, setCastShadow] = useState(objectData.castShadow);
 
     const [color, setColor] = useState(objectData.material.color);
-    const [mass, setMass] = useState(objectData.physics.mass);
 
     const [wireframe, setWireframe] = useState(objectData.material.wireframe);
 
     const[reflectivity, setReflectivity] = useState(objectData.material.reflectivity);
+
+    const [mass, setMass] = useState(objectData.physics.mass);
 
     const [ref, api] = useBox(() => ({ mass, position, rotation, scale }));
     const [hovered, setHover] = useState(false)
@@ -69,10 +70,12 @@ function NPoint(objectData: ObjectData) {
                 },
                 geometry: {
                     args: {
-                        label: 'Points',
+                        label: 'Dimension',
                         value: args,
+                        min: 0.1,
+                        step: 0.2,
                         onChange: (value: any) => {
-                            setArgs(value);
+                            // setArgs(value);
                         }
                     }
                 },

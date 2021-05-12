@@ -1,6 +1,6 @@
 import {OrbitControls} from "@react-three/drei";
 import React, {useEffect, useRef, useState} from "react";
-import {button, buttonGroup, useControls} from "leva";
+import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";
 import {useThree} from "@react-three/fiber";
 import Dodecahedron from "../shapes/Dodecahedron";
 import * as THREE from 'three';
@@ -8,9 +8,50 @@ import Cube from "../shapes/Cube";
 import {ObjectData, useObjectStore} from "../store/ObjectStore";
 import {MyTransformControls} from "./MyTransformControls";
 import NPoint from "../shapes/NPoint";
-import {Vector2} from "three";
+import {Object3D, Vector2, Vector3} from "three";
+import {DimensionsIcon} from "@radix-ui/react-icons";
+import { plot } from '@leva-ui/plugin-plot';
+import Plane from "../shapes/Plane";
+import niceColors from 'nice-color-palettes'
 
 const TransformControlsLock = () => {
+
+    const { raycaster, mouse, camera, scene, gl } = useThree();
+    const reduce = (objects: Object3D[], into: Object): {  } => {
+        return objects.reduce((obj, child, i) => {
+                const schema = {
+                    // [`${child.type}_${child.name}`]: button(() => alert(child.id))
+                    [`${child.type}_${child.uuid}_uuid`]: {
+                        label: 'id',
+                        value: child.uuid,
+                        type: LevaInputs.STRING
+                    }
+                };
+                if(child.name){
+                    schema[`${child.type}_${child.name}_name`]= {
+                        label: 'name',
+                        value: child.name,
+                        type: LevaInputs.STRING
+                    }
+                }
+                const s = {[`Select_${child.uuid.substr(0, 4)}`]: button(() => setSelectedObject(scene.getObjectById(child.id)))}
+                // console.log(child);
+                reduce(child.children, {s});
+                const p = {
+                    [`${child.type}_${child.uuid.substr(0, 4)}`]: folder(s, {collapsed: false})
+                }
+
+                return Object.assign(obj, p);
+            },
+            into);
+    }
+    const sc = {'Scene': {
+            label: 'uuid',
+            value: scene.id,
+            type: LevaInputs.STRING
+        }};
+    reduce(scene.children, sc);
+    useControls('Scene', sc, [scene, scene.children]);
 
     // @ts-ignore
     const [{mode}, setMode] = useControls('Transform', () => ({
@@ -22,13 +63,15 @@ const TransformControlsLock = () => {
                 rotate: 'rotate',
                 translate: 'translate'
             },
-            render: (get) => selectedObject != null
+            // render: (get) => selectedObject != null
         },
         'Preset': buttonGroup({
+            label: <DimensionsIcon/>,
+            opts: {
             'Translate': () => setMode({ mode: 'translate' }),
             'Rotate': () => setMode({ mode: 'rotate' }),
             'Scale': () => setMode({ mode: 'scale' }),
-        }),
+        }})
     }));
 
     const [selectedObject, setSelectedObject] = useState<THREE.Object3D>();
@@ -36,7 +79,6 @@ const TransformControlsLock = () => {
     const orbitControls = useRef<any>(null!);
     const transformControls =  useRef<any>(null!);
 
-    const { raycaster, mouse, camera, scene } = useThree();
     useEffect(() => {
         if(transformControls.current && orbitControls.current) {
             const {current: controls} = transformControls;
@@ -47,10 +89,10 @@ const TransformControlsLock = () => {
                 }
                 if (mode === "rotate" && !event.value) {
                     const orientation = (transformControls.current?.object as THREE.Object3D).rotation;
-                    setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
+                    // setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
                 }
                 if (mode === "scale" && !event.value) {
-                    setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
+                    // setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
                 }
             }
             controls.addEventListener('dragging-changed', callback)
@@ -58,30 +100,49 @@ const TransformControlsLock = () => {
         }
     })
 
-    const [, setObject] = useControls('Object', () => ({
-        castShadow: {
-            label: 'Cast Shadow',
-            value: false,
-            onChange: (value: boolean) => {
-                selectedObject?.userData.controls.castShadow.onChange(value);
-            },
-            render: (get) => selectedObject != null
-        }
-    }), [selectedObject]);
+    const object = selectedObject?.userData.controls || {};
+    const [, setObject] = useControls('Mesh', () => (object) , [selectedObject]);
 
-
-    const transform = selectedObject?.userData.controls.transform || {};
+    const transform = selectedObject?.userData.controls?.transform || {
+        position: {
+            label: 'Position',
+            value: [0, 0, 0],
+            onChange: (value: Vector3) => {
+                // selectedObject?.position.set(value.x, value.y, value.z);
+            }
+        },
+        rotation : [0, 0, 0],
+        scale: [1, 1, 1]};
     const [, setTransform] = useControls('Transform', () => (transform), [selectedObject]);
 
-    const geometry = selectedObject?.userData.controls.geometry || {};
+    const [args, setArgs] = useState<any[]>([])
+    const inputs = args
+        .reduce((control, _, i) =>{
+            return Object.assign(control, { [`Point_${i}`]: {
+                label: `Point_${i}`,
+                value:_,
+                onChange: (value: number) => {
+                    // args[i] = value as any;
+                    // selectedObject?.userData.controls.geometry.args.onChange(args);
+                    console.log(value);
+                }
+            } })
+        }, {})
+    const values = useControls('Geometry', inputs, [args])
+
+    const geometry = selectedObject?.userData.controls?.geometry || {};
     const [, setGeometry] = useControls('Geometry', () => (geometry), [selectedObject]);
 
-    const material = selectedObject?.userData.controls.material || {};
+    const material = selectedObject?.userData.controls?.material || {};
     const [, setMaterial] = useControls('Material', () => (material), [selectedObject]);
 
-    const physics = selectedObject?.userData.controls.physics || {};
+    const physics = selectedObject?.userData.controls?.physics || {};
     const [, setPhysics] = useControls('Physics', () => (physics), [selectedObject]);
 
+    // const { y } = useControls({
+    //     i: 100,
+    //     y: plot({ expression: 'cos(x)' })
+    // }, {})
     // useControls('Labels', {
     //     label: {
     //         image: ''
@@ -90,15 +151,33 @@ const TransformControlsLock = () => {
     // });
 
     useEffect(() => {
-        if(selectedObject && selectedObject.userData.controls){
-            setObject({castShadow: selectedObject.userData.controls.castShadow.value});
-            setTransform({position: selectedObject.userData.controls.transform.position.value});
-            setTransform({rotation: selectedObject.userData.controls.transform.rotation.value});
-            setTransform({scale: selectedObject.userData.controls.transform.scale.value});
-            setGeometry({args: selectedObject.userData.controls.geometry.args.value});
-            setMaterial({ color: selectedObject.userData.controls.material.color.value});
-            setMaterial({ wireframe: selectedObject.userData.controls.material.wireframe.value});
-            setPhysics({mass: selectedObject.userData.controls.physics.mass.value});
+        if(selectedObject){
+            console.log(selectedObject.position)
+            const orientation = selectedObject.rotation;
+            setTransform({position: selectedObject.position.toArray()});
+            setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
+            setTransform({scale: selectedObject.scale.toArray()});
+            if(selectedObject.userData.controls){
+                setObject({castShadow: selectedObject.userData.controls.castShadow?.value});
+
+                // const arg = selectedObject.userData.controls.geometry.args.value[0];
+                //
+                // if(typeof arg === 'number'){
+                //     // setArgs([]);
+                //     setGeometry({args: selectedObject.userData.controls.geometry.args.value});
+                // } else if(typeof arg === 'object') {
+                //     setArgs(selectedObject.userData.controls.geometry.args.value);
+                //     setGeometry({args: []});
+                // }
+                setMaterial({ color: selectedObject.userData.controls.material.color.value});
+                setMaterial({ wireframe: selectedObject.userData.controls.material.wireframe.value});
+                setPhysics({enabled: selectedObject.userData.controls.physics?.enabled?.value});
+                setPhysics({mass: selectedObject.userData.controls.physics.mass.value});
+
+            }else{
+
+            }
+
         } else {
             // setMaterialControls([]);
         }
@@ -112,7 +191,7 @@ const TransformControlsLock = () => {
         mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.name === 'Cube');
+        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.type === 'Mesh');
         // .sort((a, b) => a.distance < b.distance ? 1: -1);
         if (intersects.length) {
             const object = intersects[0].object;
@@ -125,6 +204,8 @@ const TransformControlsLock = () => {
     document.addEventListener( 'pointerdown', onPointerDown );
     const renderObject = (objectData: ObjectData, index: number) => {
         switch (objectData.type) {
+            case "Plane":
+                return <Plane key={index} {...objectData}/>;
             case "Cube":
                 return <Cube key={index} {...objectData}/>;
             case "NPoint":
@@ -173,6 +254,7 @@ const TransformControlsLock = () => {
             />
             <Dodecahedron time={0} />
             {objects.map(renderObject)}
+            {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
         </>
 
         )
