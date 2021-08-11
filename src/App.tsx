@@ -3,8 +3,16 @@ import {Camera, Canvas, extend, useFrame, useThree, render} from "@react-three/f
 import * as THREE from "three"
 import { Html, OrbitControls, TransformControls } from "@react-three/drei"
 import './App.css';
-import {Color} from "three";
+import {ACESFilmicToneMapping, Color, Vector3} from "three";
 import BasicScene from "./scene/BasicScene";
+import {ObjectData} from "./store/ObjectStore";
+import Plane from "./shapes/Plane";
+import Cube from "./shapes/Cube";
+import NPoint from "./shapes/NPoint";
+import {LightConfig} from "./store/LightConfig";
+import {CameraConfig} from "./store/CameraConfig";
+import {buttonGroup, useControls} from "leva";
+import {InputIcon} from "@radix-ui/react-icons";
 
 
 const Fallback = () => (
@@ -15,19 +23,37 @@ const Fallback = () => (
 
 function App() {
     const [selectedObject, setSelectedObject] = useState<THREE.Object3D>();
-
+    const lights: Array<LightConfig> = [
+        {
+            index: 0,
+            position: [0, 0, 0],
+            color: 'indianred'
+        },
+        {
+            index: 1,
+            position: [10, 10, -10],
+            color: 'orange'
+        },
+        {
+            index: 2,
+            position: [-10, -10, 10],
+            color: 'lightblue'
+        }
+    ];
+    const renderLight = (config: LightConfig, index: number) => {
+        return <pointLight key={config.index} position={config.position} color={new Color(config.color)} />;
+    }
     return (
         <>
             <canvas id="canvas-hoverinc" style={{width: 500, height: 500, background: "white", display: "none"}}></canvas>
-            <Canvas id={"canvas-webgl"} style={{ background: "#BFD1E5"}} camera={{ position: [10, 5, 10], rotation:[0, 0, 0], fov: 50 }}
+            <Canvas id={"canvas-webgl"} style={{ background: "#BFD1E5"}}
+                    camera={{position: [10, 5, 10], rotation: [0, 0, 0], fov: 50}}
                     gl={{alpha: true}}
                     // raycaster={{ filter: (intersects, state) => intersects.reverse()}}
             >
 
                 <axesHelper args={[20]}/>
-                <pointLight color={new Color('indianred')} />
-                <pointLight position={[10, 10, -10]} color={new Color('orange')} />
-                <pointLight position={[-10, -10, 10]} color={new Color('lightblue')} />
+                {lights.map(renderLight)}
                 <Suspense fallback={<Fallback />}>
                     <BasicScene />
                 </Suspense>

@@ -1,11 +1,11 @@
 import Plane from "../shapes/Plane";
 import {Physics} from "@react-three/cannon";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";
 import niceColors from 'nice-color-palettes'
 import {useThree} from "@react-three/fiber";
 import TransformControlsLock from "../three-extension/TransformControlsLock";
-import {ACESFilmicToneMapping, Object3D} from "three";
+import {ACESFilmicToneMapping, Object3D, PerspectiveCamera, Vector3} from "three";
 import {DimensionsIcon, InputIcon} from "@radix-ui/react-icons";
 //@ts-ignore
 import { RayTracingRenderer } from 'ray-tracing-renderer'
@@ -77,6 +77,32 @@ const BasicScene = () => {
             }})
     }));
 
+    const [, setCamera] = useControls('Camera', () => ({
+        position: {
+            label: 'Position',
+            value: [camera.position.x, camera.position.y, camera.position.z],
+            step: 5,
+            onChange: (value: [number, number, number]) => {
+                camera.position.setX(value[0]);
+                camera.position.setY(value[1]);
+                camera.position.setZ(value[2]);
+            }
+        },
+        rotation: {
+            label: 'Rotation',
+            value: [camera.rotation.x, camera.rotation.y, camera.rotation.z],
+            onChange: (value: [number, number, number]) => {
+                camera.rotation.set(value[0], value[1], value[2]);
+            }
+        },
+        fov: {
+            label: 'FOV',
+            value: (camera as PerspectiveCamera).fov,
+            onChange: (value: number) => {
+                (camera as PerspectiveCamera).fov = value;
+            }
+        }
+    }));
     return (
 
         <>
