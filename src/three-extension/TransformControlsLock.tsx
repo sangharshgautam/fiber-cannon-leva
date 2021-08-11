@@ -1,19 +1,64 @@
-import {OrbitControls} from "@react-three/drei";
+import {OrbitControls, useGLTF, useTexture} from "@react-three/drei";
 import React, {useEffect, useRef, useState} from "react";
 import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";
-import {useThree} from "@react-three/fiber";
+import {useLoader, useThree} from "@react-three/fiber";
 import Dodecahedron from "../shapes/Dodecahedron";
 import * as THREE from 'three';
 import Cube from "../shapes/Cube";
 import {ObjectData, useObjectStore} from "../store/ObjectStore";
 import {MyTransformControls} from "./MyTransformControls";
 import NPoint from "../shapes/NPoint";
-import {Object3D, Vector2, Vector3} from "three";
+import {CubeTextureLoader, Object3D, TextureLoader, Vector2, Vector3} from "three";
 import {DimensionsIcon} from "@radix-ui/react-icons";
 import { plot } from '@leva-ui/plugin-plot';
 import Plane from "../shapes/Plane";
 import niceColors from 'nice-color-palettes'
+import {RGBELoader} from "three/examples/jsm/loaders/RGBELoader";
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
+import { Environment } from '@react-three/drei'
+import {HDRCubeTextureLoader} from "three/examples/jsm/loaders/HDRCubeTextureLoader";
 
+function Model () {
+    const { raycaster, mouse, camera, scene, gl } = useThree();
+    // @ts-ignore
+    // const envMap = useLoader(HDRCubeTextureLoader, ['assets/hoverinc/street-by-water.hdr']);
+    const envMapLDR = useLoader(TextureLoader, 'assets/hoverinc/envmap.jpg');
+    const gltf = useLoader(GLTFLoader, 'assets/hoverinc/scene.gltf');
+    const model = gltf.scene;
+    model.scale.set(0.1, 0.1, 0.1);
+    model.position.set(-4, -5, 0);
+    model.rotation.set(0, Math.PI/2, 0);
+    model.traverse((child: any) => {
+        if (child instanceof THREE.Mesh) {
+            // only necessary for WebGLRenderer
+            child.castShadow = true;
+            child.receiveShadow = true;
+        }
+        if (child.material && child.material.name == 'LensesMat') {
+            child.material.transparent = true;
+        }
+    });
+    // new RGBELoader()
+    //     .setDataType(THREE.UnsignedByteType)
+    //     .load('assets/hoverinc/christmas_photo_studio_04_4k.hdr', function(texture) {
+    //         console.log("i am here!!!!!");
+    //
+    //         var envMap = pmremGenerator.fromEquirectangular(texture).texture;
+    //
+    //         scene.background = envMap;
+    //         scene.environment = envMap;
+    //
+    //         texture.dispose();
+    //         pmremGenerator.dispose();
+    //     });
+    //
+    // let pmremGenerator = new THREE.PMREMGenerator(gl);
+    // pmremGenerator.compileEquirectangularShader();
+    return(<>
+        <ambientLight args={[0xffffff, 0.2]}></ambientLight>
+        <primitive object={model}></primitive>
+    </>)
+}
 const TransformControlsLock = () => {
 
     const { raycaster, mouse, camera, scene, gl } = useThree();
@@ -38,7 +83,7 @@ const TransformControlsLock = () => {
                 // console.log(child);
                 reduce(child.children, {s});
                 const p = {
-                    [`${child.type}_${child.uuid.substr(0, 4)}`]: folder(s, {collapsed: false})
+                    [`${child.type}_${child.uuid.substr(0, 4)}`]: folder(s, {collapsed: true})
                 }
 
                 return Object.assign(obj, p);
@@ -85,7 +130,7 @@ const TransformControlsLock = () => {
             const callback = (event: any) => {
                 orbitControls.current.enabled = !event.value;
                 if (mode === "translate" && !event.value) {
-                    setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
+                    // setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
                 }
                 if (mode === "rotate" && !event.value) {
                     const orientation = (transformControls.current?.object as THREE.Object3D).rotation;
@@ -252,8 +297,10 @@ const TransformControlsLock = () => {
                 // minDistance={-500}
                 // maxDistance={1000}
             />
-            <Dodecahedron time={0} />
-            {objects.map(renderObject)}
+            <Model/>
+            {/*<Environment preset="sunset" background/>*/}
+            {/*<Dodecahedron time={0} />*/}
+            {/*{objects.map(renderObject)}*/}
             {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
         </>
 

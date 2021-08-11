@@ -3,14 +3,9 @@ import {Camera, Canvas, extend, useFrame, useThree, render} from "@react-three/f
 import * as THREE from "three"
 import { Html, OrbitControls, TransformControls } from "@react-three/drei"
 import './App.css';
-import {Color, OrthographicCamera} from "three";
-import {ThreeEvent} from "@react-three/fiber/dist/declarations/src/core/events";
-import {buttonGroup, useControls} from "leva";
+import {Color} from "three";
 import BasicScene from "./scene/BasicScene";
-import TransformControlsLock from "./three-extension/TransformControlsLock";
-import {EffectComposer, SelectiveBloom} from "@react-three/postprocessing";
-import {InputIcon, DimensionsIcon} from "@radix-ui/react-icons";
-import {Popover, PopoverContent, PopoverTrigger} from "./three-extension/Popover";
+
 
 const Fallback = () => (
     <Html>
@@ -21,11 +16,11 @@ const Fallback = () => (
 function App() {
     const [selectedObject, setSelectedObject] = useState<THREE.Object3D>();
 
-
     return (
         <>
-            <Canvas style={{ background: "#BFD1E5" }} camera={{ position: [10, 5, 10], rotation:[0, 0, 0], fov: 50 }}
-                    gl={{ alpha: false }}
+            <canvas id="canvas-hoverinc" style={{width: 500, height: 500, background: "white", display: "none"}}></canvas>
+            <Canvas id={"canvas-webgl"} style={{ background: "#BFD1E5"}} camera={{ position: [10, 5, 10], rotation:[0, 0, 0], fov: 50 }}
+                    gl={{alpha: true}}
                     // raycaster={{ filter: (intersects, state) => intersects.reverse()}}
             >
 

@@ -29,11 +29,11 @@ function Cube(objectData: ObjectData) {
     const [hovered, setHover] = useState(false)
 
     const mesh = useRef<Mesh>(null!)
-    useEffect(() => {
-        api.position.set(position[0], position[1], position[2]);
-        api.rotation.set(rotation[0], rotation[1], rotation[2]);
-        api.mass?.set(mass);
-    }, [position, rotation, mass]);
+    // useEffect(() => {
+    //     api.position.set(position[0], position[1], position[2]);
+    //     api.rotation.set(rotation[0], rotation[1], rotation[2]);
+    //     api.mass?.set(mass);
+    // }, [position, rotation, mass]);
     const renderDecal = (decalData: DecalData, index: number) => {
         if(mesh.current){
             return <MyDecal key={index} mesh={mesh.current} decalData={decalData}/>
@@ -41,7 +41,7 @@ function Cube(objectData: ObjectData) {
     }
     return (
         <>
-            <mesh ref={ref} name={"Cube"} castShadow={castShadow} scale={scale} userData={{
+            <mesh ref={mesh} name={"Cube"} castShadow={castShadow} position={position} rotation={rotation} scale={scale} userData={{
                 controls: {
                     castShadow: {
                         label: 'Cast Shadow',

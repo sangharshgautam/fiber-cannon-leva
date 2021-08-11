@@ -14,6 +14,7 @@ import {useEffect, useRef, useState} from "react";
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
 import {useLoader, useThree} from "@react-three/fiber";
 import {MeshPhysicalMaterialParameters} from "three/src/materials/MeshPhysicalMaterial";
+import {useTexture} from "@react-three/drei";
 
 export interface MyDecalProps {
     mesh: Mesh;
@@ -29,12 +30,11 @@ const MyDecal = (props: MyDecalProps) => {
     const { scene } = useThree();
     const geometry =  new DecalGeometry(props.mesh, new Vector3(position[0], position[1], position[2]), new Euler(rotation[0], rotation[1], rotation[2]), new Vector3(scale[0], scale[1], scale[2]));
 
-    const texture_1 = useLoader(TextureLoader, 'assets/Label2.png');
+    const texture_1 = useTexture('assets/Label2.png');
     const material = new MeshPhysicalMaterial({
         // specular: 0xffffff,
         // shininess: 10,
         map: texture_1,
-        // normalMap: ImageUtils.loadTexture( 'assets/wrinkle-normal.jpg' ),
         normalScale: new Vector2( .15, .15 ),
         transparent: true,
         depthTest: true,

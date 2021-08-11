@@ -18,17 +18,17 @@ const BasicScene = () => {
 
 
     useTransform();
-    console.log(gl.domElement);
 
     const canvasRef = React.useRef() as React.MutableRefObject<HTMLCanvasElement>;
     const hoverinc = new RayTracingRenderer({
-        canvas: gl.domElement,
+        canvas: document.getElementById("canvas-hoverinc"),
         antialias: true,
         alpha: true,
     });
     hoverinc.setSize(window.innerWidth, window.innerHeight);
 
     const tick = () => {
+
         hoverinc.render(scene, camera);
         requestAnimationFrame(tick);
     }
@@ -46,7 +46,10 @@ const BasicScene = () => {
             },
             onChange(value: string) {
                 if(value === 'hoverinc'){
-                    tick();
+                    // @ts-ignore
+                    document.getElementById("canvas-hoverinc").style.display = 'block';
+                    // @ts-ignore
+                    document.getElementById("canvas-webgl").style.display = 'none';
                     hoverinc.gammaOutput = true;
                     hoverinc.gammaFactor = 2.2;
                     hoverinc.setPixelRatio(1.0);
@@ -54,7 +57,13 @@ const BasicScene = () => {
                     hoverinc.toneMappingExposure = 1.5;
                     hoverinc.renderWhenOffFocus = false;
                     hoverinc.bounces = 3;
-                    hoverinc.render(scene, camera);
+                    tick();
+                }
+                if(value == 'webgl') {
+                    // @ts-ignore
+                    document.getElementById("canvas-hoverinc").style.display = 'none';
+                    // @ts-ignore
+                    document.getElementById("canvas-webgl").style.display = 'block';
                 }
             }
             // render: (get) => selectedObject != null
