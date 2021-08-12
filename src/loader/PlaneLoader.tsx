@@ -1,9 +1,10 @@
 import {useBox, usePlane} from "@react-three/cannon";
 import React, {useEffect, useRef, useState} from "react";
+import {DoubleSide} from "three";
 
 // @ts-ignore
-function Plane(objectData: ObjectData) {
-    const [args, setArgs] = useState<[]>(objectData.geometry.args);
+function PlaneLoader(objectData: ObjectData) {
+    const [args, setArgs] = useState<[number, number]>(objectData.geometry.args);
 
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
@@ -51,11 +52,8 @@ function Plane(objectData: ObjectData) {
             },
             geometry: {
                 args: {
-                    label: 'Dimension',
-                        value: args,
-                        min: 0.1,
-                        step: 0.2,
-                        onChange: (value: any) => {
+                    value: args,
+                    onChange: (value: any) => {
                         setArgs(value);
                     }
                 }
@@ -105,8 +103,8 @@ function Plane(objectData: ObjectData) {
         <>
             <mesh ref={ref} name={"Plane"} castShadow={castShadow} scale={scale} userData={userData}>
                 <planeBufferGeometry args={args}/>
-                <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity}></meshPhysicalMaterial>
+                <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity} side={DoubleSide}></meshPhysicalMaterial>
             </mesh>
         </>)
 }
-export default Plane;
+export default PlaneLoader;

@@ -6,7 +6,7 @@
     "alphs": true
   },
   "camera": {
-    "position": [10, 5, 10],
+    "position": [25, 5, 20],
     "fov": 50,
     "target": [0, 0, 0 ]
   },
@@ -25,72 +25,502 @@
       "type": "Point",
       "position": [-10, -10, 10],
       "color": "lightblue"
+    },
+    {
+      "type": "Point",
+      "position": [50, 50, 50],
+      "color": "white"
     }
   ],
   "objects": [
-    {
-      "type": "Cube",
-      "castShadow": true,
-      "transform": {
-        "position": [0, 3, 0],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
-      },
-      "geometry": {
-        "args": [ 1, 6, 1]
-      },
-      "material": {
-        "color": {
-          "r": 0.95,
-          "g": 0.95,
-          "b": 0.95
-        },
-        "wireframe": false,
-        "reflectivity": 0.5,
-        "roughness": 1.0
-      },
-      "physics": {
-        "enabled": false,
-        "mass": 1
-      },
-      "decals": []
-    },
-    {
-      "type": "Cube",
-      "castShadow": false,
-      "transform": {
-        "position": [5, 0, 5],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
-      },
-      "geometry": {
-        "args": [ 1, 1, 1]
-      },
-      "material": {
-        "color": "#4316ba",
-        "wireframe": false,
-        "reflectivity": 1.0,
-        "roughness": 1.0
-      },
-      "physics": {
-        "enabled": true,
-        "mass": 2
-      },
-      "decals": []
-    }
+
   ],
   "models": [
-    {
-      "url": "assets/hoverinc/scene.gltf",
-      "position": [-4, -5, 0],
-      "rotation": [0, 1.57, 0],
-      "scale": [0.1, 0.1, 0.1]
-    },
     {
       "url": "https://threejs.org/examples/models/gltf/Xbot.glb",
       "position": [10, 0, 10],
       "rotation": [0, 1.57, 0],
-      "scale": [1, 1, 1]
+      "scale": [5, 5, 5]
+    }
+  ],
+  "groups": [
+    {
+      "name": "Room",
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
+      "scale": [1, 1, 1],
+      "physics": {
+        "enabled": true,
+        "mass": 1
+      },
+      "objects": [
+        {
+          "name": "Floor",
+          "type": "Plane",
+          "castShadow": false,
+          "transform": {
+            "position": [10, 0, 10],
+            "rotation": [-1.57, 0, 0],
+            "scale": [2, 2, 2]
+          },
+          "geometry": {
+            "args": [10, 10]
+          },
+          "material": {
+            "color": "#FFFFFF",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": true,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Left Wall",
+          "type": "Plane",
+          "castShadow": false,
+          "transform": {
+            "position": [10, 10, 0],
+            "rotation": [0, 0, 0],
+            "scale": [2, 2, 2]
+          },
+          "geometry": {
+            "args": [10, 10]
+          },
+          "material": {
+            "color": "#AA874D",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": true,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Right Wall",
+          "type": "Plane",
+          "castShadow": false,
+          "transform": {
+            "position": [0, 10, 10],
+            "rotation": [0, 1.57, 0],
+            "scale": [2, 2, 2]
+          },
+          "geometry": {
+            "args": [10, 10]
+          },
+          "material": {
+            "color": "#AA874D",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        }
+      ]
+    },
+    {
+      "name": "Table",
+      "position": [2, 3, 10],
+      "rotation": [0, 0, 0],
+      "scale": [0.5, 0.5, 0.5],
+      "physics": {
+        "enabled": true,
+        "mass": 1
+      },
+      "objects": [
+        {
+          "name": "Table Leg 1",
+          "type": "Cube",
+          "castShadow": true,
+          "transform": {
+            "position": [4, 3, 4],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Table Leg 2",
+          "type": "Cube",
+          "castShadow": true,
+          "transform": {
+            "position": [4, 3, 12],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Table Leg 3",
+          "type": "Cube",
+          "castShadow": true,
+          "transform": {
+            "position": [8, 3, 12],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },{
+          "name": "Table Leg 4",
+          "type": "Cube",
+          "castShadow": true,
+          "transform": {
+            "position": [8, 3, 4],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Table Top",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [3, 6, 3],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 6, 0.5, 10]
+          },
+          "material": {
+            "color": "#C04B1B",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        }
+      ]
+    },
+    {
+      "name": "Chair",
+      "position": [10, 3, 10],
+      "rotation": [0, 0, 0],
+      "scale": [0.5, 0.5, 0.5],
+      "physics": {
+        "enabled": true,
+        "mass": 1
+      },
+      "objects": [
+        {
+          "name": "Chair Leg 1",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [4, 0, 4],
+            "rotation": [0, 0, 0],
+            "scale": [0.5, 1, 0.5]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Chair Leg 2",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [4, 0, 8],
+            "rotation": [0, 0, 0],
+            "scale": [0.5, 1, 0.5]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Chair Leg 3",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [8, 0, 8],
+            "rotation": [0, 0, 0],
+            "scale": [0.5, 1, 0.5]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },{
+          "name": "Table Leg 4",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [8, 0, 4],
+            "rotation": [0, 0, 0],
+            "scale": [0.5, 1, 0.5]
+          },
+          "geometry": {
+            "args": [ 1, 6, 1]
+          },
+          "material": {
+            "color": "#8290A7",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Chair Top",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [3, 6, 3],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 6, 0.5, 6]
+          },
+          "material": {
+            "color": "#273245",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        }
+      ]
+    },
+    {
+      "name": "Lamp",
+      "position": [2, 1, 8],
+      "rotation": [0, 0, 0],
+      "scale": [0.1, 0.1, 0.1],
+      "physics": {
+        "enabled": true,
+        "mass": 1
+      },
+      "objects": [
+        {
+          "name": "Lamp Base",
+          "type": "Cylinder",
+          "castShadow": true,
+          "transform": {
+            "position": [3, 1, 2],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 10, 10, 2, 32]
+          },
+          "material": {
+            "color": "#273245",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Lamp Rod",
+          "type": "Cylinder",
+          "castShadow": true,
+          "transform": {
+            "position": [3, 50, 3],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 1, 1, 100, 32]
+          },
+          "material": {
+            "color": "#273245",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        },
+        {
+          "name": "Lamp Shade",
+          "type": "Lathe",
+          "castShadow": true,
+          "transform": {
+            "position": [3, 95, 2],
+            "rotation": [3.14, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [ 10, 10, 2, 32]
+          },
+          "material": {
+            "color": "#B8C6D1",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": []
+        }
+      ]
+    },
+    {
+      "name": "Wall 1 Painting",
+      "position": [4, 10, 0.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 2, 2],
+      "physics": {
+        "enabled": true,
+        "mass": 1
+      },
+      "objects": [
+        {
+          "name": "Painting",
+          "type": "Extruded",
+          "castShadow": true,
+          "transform": {
+            "position": [0, 0, 0],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 0.1]
+          },
+          "geometry": {
+            "args": [ 5, 3, 1]
+          },
+          "material": {
+            "color": "#2D3B55",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "physics": {
+            "enabled": false,
+            "mass": 0
+          },
+          "decals": [{
+            "transform": {
+              "position": [4.32, -0.68, 5.46],
+              "rotation": [0, 0, 0],
+              "scale": [5, 5, 5]
+            },
+            "material": {
+              "color": "#4316ba",
+              "wireframe": false,
+              "reflectivity": 0.5,
+              "roughness": 1.0
+            }
+          }]
+        }
+      ]
     }
   ]
 }

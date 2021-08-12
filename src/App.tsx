@@ -19,7 +19,7 @@ const Fallback = () => (
 )
 const config: SceneConfig = sceneConfig as any;
 export const useObjectStore = create(
-    combineAndImmer({objects: config.objects, models: config.models}, (set) => ({
+    combineAndImmer({objects: config.objects, models: config.models, groups: config.groups}, (set) => ({
         updateObject: (object: ObjectConfig, index: number) =>
             set((state) => {
                 // state.objects[index] = object;
@@ -41,7 +41,7 @@ function App() {
         if(config.type === "Directional") {
             return <directionalLight args={[0xffffff]} position={config.position} />
         }
-        return <pointLight args={[config.args]} key={index} position={config.position}/>;
+        return <pointLight args={[config.color, 1, 100]} key={index} position={config.position}/>;
     }
     return (
         <>

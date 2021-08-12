@@ -4,24 +4,18 @@ import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";
 import {useLoader, useThree} from "@react-three/fiber";
 import Dodecahedron from "../shapes/Dodecahedron";
 import * as THREE from 'three';
-import Cube from "../shapes/Cube";
 import {MyTransformControls} from "./MyTransformControls";
-import NPoint from "../shapes/NPoint";
 import {CubeTextureLoader, Object3D, TextureLoader, Vector2, Vector3} from "three";
 import {DimensionsIcon} from "@radix-ui/react-icons";
-import { plot } from '@leva-ui/plugin-plot';
-import Plane from "../shapes/Plane";
-import niceColors from 'nice-color-palettes'
-import {RGBELoader} from "three/examples/jsm/loaders/RGBELoader";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import { Environment } from '@react-three/drei'
 import {HDRCubeTextureLoader} from "three/examples/jsm/loaders/HDRCubeTextureLoader";
 import {ObjectConfig} from "../models/ObjectConfig";
 import {useObjectStore} from "../App";
-import Extruded from "../shapes/Extruded";
 import {ModelConfig} from "../models/ModelConfig";
 import ModelLoader from "../loader/ModelLoader";
 import ObjectLoader from "../loader/ObjectLoader";
+import {GroupConfig} from "../models/GroupConfig";
+import GroupLoader from "../loader/GroupLoader";
 
 
 const TransformControlsLock = () => {
@@ -95,14 +89,14 @@ const TransformControlsLock = () => {
             const callback = (event: any) => {
                 orbitControls.current.enabled = !event.value;
                 if (mode === "translate" && !event.value) {
-                    // setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
+                    setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
                 }
                 if (mode === "rotate" && !event.value) {
                     const orientation = (transformControls.current?.object as THREE.Object3D).rotation;
-                    // setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
+                    setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
                 }
                 if (mode === "scale" && !event.value) {
-                    // setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
+                    setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
                 }
             }
             controls.addEventListener('dragging-changed', callback)
@@ -110,17 +104,11 @@ const TransformControlsLock = () => {
         }
     })
 
-    const object = selectedObject?.userData.controls || {};
-    const [, setObject] = useControls('Mesh', () => (object) , [selectedObject]);
+    const objectProps = selectedObject?.userData.controls || {};
+    const [, setObjectProps] = useControls('Mesh', () => (objectProps) , [selectedObject]);
 
     const transform = selectedObject?.userData.controls?.transform || {
-        position: {
-            label: 'Position',
-            value: [0, 0, 0],
-            onChange: (value: Vector3) => {
-                // selectedObject?.position.set(value.x, value.y, value.z);
-            }
-        },
+        position: [0, 0, 0],
         rotation : [0, 0, 0],
         scale: [1, 1, 1]};
     const [, setTransform] = useControls('Transform', () => (transform), [selectedObject]);
@@ -160,26 +148,19 @@ const TransformControlsLock = () => {
     //     Apply: button(() => alert('click'))
     // });
 
+
     useEffect(() => {
         if(selectedObject){
-            console.log(selectedObject);
             const orientation = selectedObject.rotation;
             setTransform({position: selectedObject.position.toArray()});
             setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
             setTransform({scale: selectedObject.scale.toArray()});
-            if(selectedObject.userData.controls){
-                setObject({castShadow: selectedObject.userData.controls.castShadow?.value});
 
-                // const arg = selectedObject.userData.controls.geometry.args.value[0];
-                //
-                // if(typeof arg === 'number'){
-                //     // setArgs([]);
-                //     setGeometry({args: selectedObject.userData.controls.geometry.args.value});
-                // } else if(typeof arg === 'object') {
-                //     setArgs(selectedObject.userData.controls.geometry.args.value);
-                //     setGeometry({args: []});
-                // }
-                console.log(selectedObject.userData.controls.material.color.value);
+            if(selectedObject.userData.controls){
+                setObjectProps({castShadow: selectedObject.userData.controls.castShadow?.value});
+                // setArgs({args: selectedObject.userData.controls.geometry.args.value});
+
+                setGeometry({args: selectedObject.userData.controls.geometry.args.value});
                 setMaterial({ color: selectedObject.userData.controls.material.color.value});
                 setMaterial({ wireframe: selectedObject.userData.controls.material.wireframe.value});
                 // setPhysics({enabled: selectedObject.userData.controls.physics?.enabled?.value});
@@ -188,7 +169,6 @@ const TransformControlsLock = () => {
             }else{
 
             }
-
         } else {
             // setMaterialControls([]);
         }
@@ -198,13 +178,14 @@ const TransformControlsLock = () => {
 
     const objects: ObjectConfig[] = useObjectStore((state: any) => state.objects);
     const models: ModelConfig[] = useObjectStore((state: any) => state.models);
+    const groups: GroupConfig[] = useObjectStore((state: any) => state.groups);
 
     const onPointerDown = (event: PointerEvent) => {
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.type === 'Mesh');
+        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.type === 'Mesh' || intersect.object.type === 'Group');
         // .sort((a, b) => a.distance < b.distance ? 1: -1);
         if (intersects.length) {
             const object = intersects[0].object;
@@ -256,9 +237,10 @@ const TransformControlsLock = () => {
                 // minDistance={-500}
                 // maxDistance={1000}
             />
-            {/*{models.map((model, index) => <ModelLoader key={index}  {...model}></ModelLoader>)}*/}
+            {models.map((model, index) => <ModelLoader key={index}  {...model}></ModelLoader>)}
             <Environment preset="sunset" background/>
             {objects.map((object, index) => <ObjectLoader key={index} {...object}></ObjectLoader>)}
+            {groups.map((group, index) => <GroupLoader key={index} {...group}></GroupLoader>)}
             {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
         </>
 

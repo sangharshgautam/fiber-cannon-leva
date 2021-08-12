@@ -1,4 +1,3 @@
-import Plane from "../shapes/Plane";
 import {Physics} from "@react-three/cannon";
 import React, {useEffect, useState} from "react";
 import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";

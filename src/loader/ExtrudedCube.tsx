@@ -6,8 +6,8 @@ import DecalConfig from "../models/DecalConfig";
 import * as THREE from "three";
 
 // @ts-ignore
-function Extruded(objectData: ObjectData) {
-    const [args, setArgs] = useState<[]>(objectData.geometry.args);
+function ExtrudedCube(objectData: ObjectData) {
+    const [args, setArgs] = useState<number[]>(objectData.geometry.args);
 
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
@@ -19,34 +19,29 @@ function Extruded(objectData: ObjectData) {
     const [wireframe, setWireframe] = useState(objectData.material.wireframe);
     const[reflectivity, setReflectivity] = useState(objectData.material.reflectivity);
 
-    const [physicsEnabled, setPhysicsEnabled] = useState(objectData.physics.enabled);
-    const [mass, setMass] = useState(objectData.physics.mass);
-
-    const [ref, api] = useBox(() => ({ args, mass, position, rotation, scale }));
-    const [hovered, setHover] = useState(false)
-
     const mesh = useRef<Mesh>(null!)
-    // useEffect(() => {
-    //     api.position.set(position[0], position[1], position[2]);
-    //     api.rotation.set(rotation[0], rotation[1], rotation[2]);
-    //     api.mass?.set(mass);
-    // }, [position, rotation, mass]);
     const renderDecal = (decalData: DecalConfig, index: number) => {
         if(mesh.current){
             return <MyDecal key={index} mesh={mesh.current} decalData={decalData}/>
         }
     }
-
+    const length = args[0], width = args[1];
     const shape = new THREE.Shape();
     shape.moveTo( 0,0 );
+    shape.lineTo( 0, width );
+    shape.lineTo( length, width );
+    shape.lineTo( length, 0 );
+    shape.lineTo( 0, 0 );
+
+
     objectData.geometry.args.forEach((arg: any) => shape.lineTo(arg.x, arg.y));
 
     const extrudeSettings = {
         steps: 2,
-        depth: 2,
-        bevelEnabled: false,
-        bevelThickness: 1,
-        bevelSize: 1,
+        depth: args[2],
+        bevelEnabled: true,
+        bevelThickness: 0.1,
+        bevelSize: 0.1,
         bevelOffset: 0,
         bevelSegments: 1
     };
@@ -118,27 +113,9 @@ function Extruded(objectData: ObjectData) {
                                 setReflectivity(value);
                             }
                         }
-                    },
-                    physics: {
-                        enabled: {
-                            label: 'Enabled',
-                            value: physicsEnabled,
-                            onChange: (value: boolean) => {
-                                setPhysicsEnabled(value);
-                            }
-                        },
-                        mass: {
-                            label: 'Mass',
-                            value: mass,
-                            onChange: (value: number) => {
-                                setMass(value);
-                            }
-                        }
                     }
                 }
             }}
-                  // onPointerOver={() => setHover(true)}
-                  // onPointerOut={() => setHover(false)}
             >
                 <extrudeBufferGeometry args={[shape, extrudeSettings]}></extrudeBufferGeometry>
                 <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity}></meshPhysicalMaterial>
@@ -148,4 +125,4 @@ function Extruded(objectData: ObjectData) {
 
     )
 }
-export default Extruded;
+export default ExtrudedCube;

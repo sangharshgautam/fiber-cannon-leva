@@ -30,7 +30,7 @@ const MyDecal = (props: MyDecalProps) => {
     const { scene } = useThree();
     const geometry =  new DecalGeometry(props.mesh, new Vector3(position[0], position[1], position[2]), new Euler(rotation[0], rotation[1], rotation[2]), new Vector3(scale[0], scale[1], scale[2]));
 
-    const texture_1 = useTexture('assets/Label2.png');
+    const texture_1 = useTexture('https://assets.website-files.com/6049feb0a862ecb2aaeba05e/609bd2dc3c026a426c63fb0a_BG.png');
     const material = new MeshPhysicalMaterial({
         // specular: 0xffffff,
         // shininess: 10,

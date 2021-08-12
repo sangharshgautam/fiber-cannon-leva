@@ -1,22 +1,24 @@
-import {useLoader, useThree} from "@react-three/fiber";
-import {TextureLoader} from "three";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-import * as THREE from "three";
 import React, {useState} from "react";
 import {ObjectConfig} from "../models/ObjectConfig";
-import Plane from "../shapes/Plane";
-import Cube from "../shapes/Cube";
-import Extruded from "../shapes/Extruded";
-import NPoint from "../shapes/NPoint";
+import PlaneLoader from "./PlaneLoader";
+import CubeLoader from "./CubeLoader";
+import ExtrudedCube from "./ExtrudedCube";
+import NPoint from "./NPoint";
+import CylinderLoader from "./CylinderLoader";
+import LatheLoader from "./LatheLoader";
 
 const ObjectLoader = (config: ObjectConfig, index: number) => {
     switch (config.type) {
         case "Plane":
-            return <Plane key={index} {...config}/>;
+            return <PlaneLoader key={index} {...config}/>;
         case "Cube":
-            return <Cube key={index} {...config}/>;
+            return <CubeLoader key={index} {...config}/>;
+        case "Cylinder":
+            return <CylinderLoader key={index} {...config}/>;
         case "Extruded":
-            return <Extruded key={index} {...config}/>;
+            return <ExtrudedCube key={index} {...config}/>;
+        case "Lathe":
+            return <LatheLoader key={index} {...config}></LatheLoader>
         case "NPoint":
             return <NPoint key={index} {...config}/>;
     }

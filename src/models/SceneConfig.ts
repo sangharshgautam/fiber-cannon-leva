@@ -4,6 +4,7 @@ import {WebGlConfig} from "./WebGlConfig";
 import {ObjectConfig} from "./ObjectConfig";
 import {CanvasConfig} from "./CanvasConfig";
 import {ModelConfig} from "./ModelConfig";
+import {GroupConfig} from "./GroupConfig";
 
 export interface SceneConfig {
     canvas: CanvasConfig;
@@ -12,4 +13,5 @@ export interface SceneConfig {
     lights: LightConfig[];
     objects: ObjectConfig[];
     models: ModelConfig[];
+    groups: GroupConfig[];
 }

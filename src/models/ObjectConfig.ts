@@ -7,7 +7,8 @@ import {State} from "zustand";
 
 export interface ObjectConfig extends State {
     uuid: string;
-    type: 'Plane'| 'Cube' | 'NPoint' | 'Extruded';
+    name: string;
+    type: 'Plane'| 'Cube' | 'NPoint' | 'Cylinder' | 'Extruded' | 'Lathe';
     castShadow: boolean;
     transform: TransformConfig;
     geometry: GeometryConfig;

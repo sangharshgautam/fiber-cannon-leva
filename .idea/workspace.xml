@@ -2,11 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70cbf48c-112f-4ac3-8d37-822e1d88a4ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/loader/ObjectLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/loader/CylinderLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/loader/GroupLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/loader/LatheLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/GroupConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/GltfConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ModelConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/loader/ObjectLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/ObjectLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/LightConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/LightConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ObjectConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ObjectConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/SceneConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SceneConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene/BasicScene.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/BasicScene.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scenes/model.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/scenes/model.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/Cube.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/CubeLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/Extruded.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/ExtrudedCube.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/NPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/NPoint.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/Plane.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/PlaneLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +37,17 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/App.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/scene/BasicScene.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/loader/ModelLoader.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/scenes/webgl_animation_skinning_additive_blending.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/loader/ObjectLoader.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/loader/CubeLoader.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/scenes/model.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/loader/PlaneLoader.tsx" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1sTDmrrrjkqV5Jmh44UotdEOR1e" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -37,7 +60,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/shapes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/loader" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -45,13 +68,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\loader" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\shapes" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scenes" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\store" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\public\assets\hoverinc" />
-      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scene" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\loader" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\models" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\public\assets" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scene" />
@@ -94,7 +118,8 @@
       <workItem from="1620887849937" duration="19927000" />
       <workItem from="1621006718809" duration="842000" />
       <workItem from="1628665615532" duration="15554000" />
-      <workItem from="1628752931227" duration="13398000" />
+      <workItem from="1628752931227" duration="26998000" />
+      <workItem from="1628793826706" duration="2700000" />
     </task>
     <servers />
   </component>

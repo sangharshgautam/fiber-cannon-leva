@@ -5,8 +5,8 @@ import MyDecal from "../three-extension/MyDecal";
 import DecalConfig from "../models/DecalConfig";
 
 // @ts-ignore
-function Cube(objectData: ObjectData) {
-    const [args, setArgs] = useState<[]>(objectData.geometry.args);
+function CylinderLoader(objectData: ObjectData) {
+    const [args, setArgs] = useState<[number, number, number]>(objectData.geometry.args);
 
     const [position, setPosition] = useState(objectData.transform.position);
     const [rotation, setRotation] = useState(objectData.transform.rotation);
@@ -35,6 +35,7 @@ function Cube(objectData: ObjectData) {
             return <MyDecal key={index} mesh={mesh.current} decalData={decalData}/>
         }
     }
+
     return (
         <>
             <mesh ref={mesh} name={"Cube"} castShadow={castShadow} position={position} rotation={rotation} scale={scale} userData={{
@@ -72,10 +73,7 @@ function Cube(objectData: ObjectData) {
                     },
                     geometry: {
                         args: {
-                            label: 'Dimension',
                             value: args,
-                            min: 0.1,
-                            step: 0.2,
                             onChange: (value: any) => {
                                 setArgs(value);
                             }
@@ -125,7 +123,7 @@ function Cube(objectData: ObjectData) {
                   // onPointerOver={() => setHover(true)}
                   // onPointerOut={() => setHover(false)}
             >
-                <boxBufferGeometry args={args}/>
+                <cylinderBufferGeometry args={args}/>
                 <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity}></meshPhysicalMaterial>
                 {/*<Html distanceFactor={10} style={{ pointerEvents: "none", display: hovered ? "block" : "none" }}>*/}
                 {/*    <div className="content">*/}
@@ -139,4 +137,4 @@ function Cube(objectData: ObjectData) {
 
     )
 }
-export default  Cube;
+export default  CylinderLoader;
