@@ -5,7 +5,6 @@ import {useLoader, useThree} from "@react-three/fiber";
 import Dodecahedron from "../shapes/Dodecahedron";
 import * as THREE from 'three';
 import Cube from "../shapes/Cube";
-import {ObjectData, useObjectStore} from "../store/ObjectStore";
 import {MyTransformControls} from "./MyTransformControls";
 import NPoint from "../shapes/NPoint";
 import {CubeTextureLoader, Object3D, TextureLoader, Vector2, Vector3} from "three";
@@ -17,48 +16,13 @@ import {RGBELoader} from "three/examples/jsm/loaders/RGBELoader";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import { Environment } from '@react-three/drei'
 import {HDRCubeTextureLoader} from "three/examples/jsm/loaders/HDRCubeTextureLoader";
+import {ObjectConfig} from "../models/ObjectConfig";
+import {useObjectStore} from "../App";
+import Extruded from "../shapes/Extruded";
+import {GltfConfig} from "../models/GltfConfig";
+import ModelLoader from "../loader/ModelLoader";
 
-function Model () {
-    const { raycaster, mouse, camera, scene, gl } = useThree();
-    // @ts-ignore
-    // const envMap = useLoader(HDRCubeTextureLoader, ['assets/hoverinc/street-by-water.hdr']);
-    const envMapLDR = useLoader(TextureLoader, 'assets/hoverinc/envmap.jpg');
-    const gltf = useLoader(GLTFLoader, 'assets/hoverinc/scene.gltf');
-    const model = gltf.scene;
-    model.scale.set(0.1, 0.1, 0.1);
-    model.position.set(-4, -5, 0);
-    model.rotation.set(0, Math.PI/2, 0);
-    model.traverse((child: any) => {
-        if (child instanceof THREE.Mesh) {
-            // only necessary for WebGLRenderer
-            child.castShadow = true;
-            child.receiveShadow = true;
-        }
-        if (child.material && child.material.name == 'LensesMat') {
-            child.material.transparent = true;
-        }
-    });
-    // new RGBELoader()
-    //     .setDataType(THREE.UnsignedByteType)
-    //     .load('assets/hoverinc/christmas_photo_studio_04_4k.hdr', function(texture) {
-    //         console.log("i am here!!!!!");
-    //
-    //         var envMap = pmremGenerator.fromEquirectangular(texture).texture;
-    //
-    //         scene.background = envMap;
-    //         scene.environment = envMap;
-    //
-    //         texture.dispose();
-    //         pmremGenerator.dispose();
-    //     });
-    //
-    // let pmremGenerator = new THREE.PMREMGenerator(gl);
-    // pmremGenerator.compileEquirectangularShader();
-    return(<>
-        <ambientLight args={[0xffffff, 0.2]}></ambientLight>
-        <primitive object={model}></primitive>
-    </>)
-}
+
 const TransformControlsLock = () => {
 
     const { raycaster, mouse, camera, scene, gl } = useThree();
@@ -197,7 +161,7 @@ const TransformControlsLock = () => {
 
     useEffect(() => {
         if(selectedObject){
-            console.log(selectedObject.position)
+            console.log(selectedObject);
             const orientation = selectedObject.rotation;
             setTransform({position: selectedObject.position.toArray()});
             setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
@@ -214,10 +178,11 @@ const TransformControlsLock = () => {
                 //     setArgs(selectedObject.userData.controls.geometry.args.value);
                 //     setGeometry({args: []});
                 // }
+                console.log(selectedObject.userData.controls.material.color.value);
                 setMaterial({ color: selectedObject.userData.controls.material.color.value});
                 setMaterial({ wireframe: selectedObject.userData.controls.material.wireframe.value});
-                setPhysics({enabled: selectedObject.userData.controls.physics?.enabled?.value});
-                setPhysics({mass: selectedObject.userData.controls.physics.mass.value});
+                // setPhysics({enabled: selectedObject.userData.controls.physics?.enabled?.value});
+                // setPhysics({mass: selectedObject.userData.controls.physics.mass.value});
 
             }else{
 
@@ -229,7 +194,9 @@ const TransformControlsLock = () => {
     },[selectedObject]);
 
 
-    const objects: ObjectData[] = useObjectStore((state: any) => state.objects);
+
+    const objects: ObjectConfig[] = useObjectStore((state: any) => state.objects);
+    const models: GltfConfig[] = useObjectStore((state: any) => state.models);
 
     const onPointerDown = (event: PointerEvent) => {
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -247,12 +214,17 @@ const TransformControlsLock = () => {
 
     }
     document.addEventListener( 'pointerdown', onPointerDown );
-    const renderObject = (objectData: ObjectData, index: number) => {
+    const renderModel = (modelConfig: GltfConfig, index: number) => {
+        return <ModelLoader key={index}  {...modelConfig}></ModelLoader>
+    }
+    const renderObject = (objectData: ObjectConfig, index: number) => {
         switch (objectData.type) {
             case "Plane":
                 return <Plane key={index} {...objectData}/>;
             case "Cube":
                 return <Cube key={index} {...objectData}/>;
+            case "Extruded":
+                return <Extruded key={index} {...objectData}/>;
             case "NPoint":
                 return <NPoint key={index} {...objectData}/>;
         }
@@ -297,10 +269,10 @@ const TransformControlsLock = () => {
                 // minDistance={-500}
                 // maxDistance={1000}
             />
-            <Model/>
+            {models.map(renderModel)}
             {/*<Environment preset="sunset" background/>*/}
             {/*<Dodecahedron time={0} />*/}
-            {/*{objects.map(renderObject)}*/}
+            {objects.map(renderObject)}
             {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
         </>
 

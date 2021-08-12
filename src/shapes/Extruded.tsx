@@ -3,9 +3,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {Color, Mesh} from "three";
 import MyDecal from "../three-extension/MyDecal";
 import DecalConfig from "../models/DecalConfig";
+import * as THREE from "three";
 
 // @ts-ignore
-function Cube(objectData: ObjectData) {
+function Extruded(objectData: ObjectData) {
     const [args, setArgs] = useState<[]>(objectData.geometry.args);
 
     const [position, setPosition] = useState(objectData.transform.position);
@@ -35,6 +36,20 @@ function Cube(objectData: ObjectData) {
             return <MyDecal key={index} mesh={mesh.current} decalData={decalData}/>
         }
     }
+
+    const shape = new THREE.Shape();
+    shape.moveTo( 0,0 );
+    objectData.geometry.args.forEach((arg: any) => shape.lineTo(arg.x, arg.y));
+
+    const extrudeSettings = {
+        steps: 2,
+        depth: 2,
+        bevelEnabled: false,
+        bevelThickness: 1,
+        bevelSize: 1,
+        bevelOffset: 0,
+        bevelSegments: 1
+    };
     return (
         <>
             <mesh ref={mesh} name={"Cube"} castShadow={castShadow} position={position} rotation={rotation} scale={scale} userData={{
@@ -125,18 +140,12 @@ function Cube(objectData: ObjectData) {
                   // onPointerOver={() => setHover(true)}
                   // onPointerOut={() => setHover(false)}
             >
-                <boxBufferGeometry args={args}/>
+                <extrudeBufferGeometry args={[shape, extrudeSettings]}></extrudeBufferGeometry>
                 <meshPhysicalMaterial color={color} wireframe={wireframe} reflectivity={reflectivity}></meshPhysicalMaterial>
-                {/*<Html distanceFactor={10} style={{ pointerEvents: "none", display: hovered ? "block" : "none" }}>*/}
-                {/*    <div className="content">*/}
-                {/*        Mass: {mass}*/}
-                {/*    </div>*/}
-                {/*</Html>*/}
-
             </mesh>
             {objectData.decals.map(renderDecal)}
         </>
 
     )
 }
-export default  Cube;
+export default Extruded;

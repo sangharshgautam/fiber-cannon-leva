@@ -2,25 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70cbf48c-112f-4ac3-8d37-822e1d88a4ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/hoverinc/envmap.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/hoverinc/scene.gltf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/hoverinc/street-by-water.hdr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scene/Cameraah.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/CanvasConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/ColorConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/DecalConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/GeometryConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/GltfConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/MaterialConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/ObjectConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/PhysicsConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/SceneConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/SceneState.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/TransformConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/TwoDPointConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/WebGlConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scenes/model.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scenes/table_chair.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scenes/webgl_animation_skinning_additive_blending.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shapes/Extruded.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/Cameraah.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/notes.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scene/BasicScene.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/BasicScene.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shapes/Cube.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/Cube.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/NPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/NPoint.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shapes/Plane.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/Plane.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/CameraConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/CameraConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/DecalData.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/LightConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/LightConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/ObjectStore.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/ObjectStore.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/three-extension/Popover.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +61,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/hoverinc" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/shapes" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -58,11 +69,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\shapes" />
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scenes" />
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\store" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\public\assets\hoverinc" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scene" />
-      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\models" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\public\assets" />
       <recent name="C:\Users\Sangharsh\IdeaProjects\fiber-cannon-leva\src\scene" />
     </key>
@@ -103,7 +117,8 @@
       <updated>1620887848274</updated>
       <workItem from="1620887849937" duration="19927000" />
       <workItem from="1621006718809" duration="842000" />
-      <workItem from="1628665615532" duration="1697000" />
+      <workItem from="1628665615532" duration="15554000" />
+      <workItem from="1628752931227" duration="10738000" />
     </task>
     <servers />
   </component>

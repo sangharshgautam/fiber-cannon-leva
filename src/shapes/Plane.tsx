@@ -1,9 +1,5 @@
 import {useBox, usePlane} from "@react-three/cannon";
 import React, {useEffect, useRef, useState} from "react";
-import * as THREE from "three";
-import {ObjectData} from "../store/ObjectStore";
-import {Mesh} from "three";
-import DecalData from "../store/DecalData";
 
 // @ts-ignore
 function Plane(objectData: ObjectData) {

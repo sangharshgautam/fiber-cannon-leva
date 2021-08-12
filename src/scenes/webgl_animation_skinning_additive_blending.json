@@ -1,0 +1,78 @@
+{
+  "canvas": {
+    "background": "#BFD1E5"
+  },
+  "gl": {
+    "alphs": true
+  },
+  "camera": {
+    "position": [-1, 2, 3],
+    "fov": 45,
+    "target": [0, 0, 0 ]
+  },
+  "lights": [
+    {
+      "type": "Hemisphere",
+      "position": [0, 20, 0],
+      "args": ["0xffffff", "0x444444"]
+    },
+    {
+      "type": "Directional",
+      "position": [3, 10, 10],
+      "args": "0xffffff"
+    }
+  ],
+  "objects": [
+    {
+      "type": "Cube",
+      "castShadow": true,
+      "transform": {
+        "position": [0, 3, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "geometry": {
+        "args": [ 1, 6, 1]
+      },
+      "material": {
+        "color": [0.95, 0.95, 0.95],
+        "wireframe": false,
+        "reflectivity": 0.5,
+        "roughness": 1.0
+      },
+      "physics": {
+        "enabled": false,
+        "mass": 1
+      },
+      "decals": []
+    },
+    {
+      "type": "Cube",
+      "castShadow": false,
+      "transform": {
+        "position": [5, 0, 5],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "geometry": {
+        "args": [ 1, 1, 1]
+      },
+      "material": {
+        "color": "#4316ba",
+        "wireframe": false,
+        "reflectivity": 1.0,
+        "roughness": 1.0
+      },
+      "physics": {
+        "enabled": true,
+        "mass": 2
+      },
+      "decals": []
+    }
+  ],
+  "gltf": [
+    {
+      "url": "https://threejs.org/examples/models/gltf/Xbot.glb"
+    }
+  ]
+}

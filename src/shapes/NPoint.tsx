@@ -1,10 +1,7 @@
 import {useBox} from "@react-three/cannon";
 import React, {useEffect, useState} from "react";
-import {useControls} from "leva";
-import * as THREE from 'three';
 import {Html} from "@react-three/drei";
 import {Color, Vector2} from "three";
-import {ObjectData} from "../store/ObjectStore";
 
 // @ts-ignore
 function NPoint(objectData: ObjectData) {

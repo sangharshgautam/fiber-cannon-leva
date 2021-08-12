@@ -1,0 +1,77 @@
+{
+  "canvas": {
+    "background": "#BFD1E5"
+  },
+  "gl": {
+    "alphs": true
+  },
+  "camera": {
+    "position": [10, 5, 10],
+    "fov": 50,
+    "target": [0, 0, 0 ]
+  },
+  "lights": [
+    {
+      "type": "Point",
+      "position": [0, 0, 0],
+      "color": "indianred"
+    },
+    {
+      "type": "Point",
+      "position": [10, 10, -10],
+      "color": "orange"
+    },
+    {
+      "type": "Point",
+      "position": [-10, -10, 10],
+      "color": "lightblue"
+    }
+  ],
+  "objects": [
+    {
+      "type": "Extruded",
+      "castShadow": true,
+      "transform": {
+        "position": [0, 0, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "geometry": {
+        "args": [ {
+          "x": 0,
+          "y": 0
+        },{
+          "x": 0,
+          "y": 8
+        },{
+          "x": 12,
+          "y": 8
+        },{
+          "x": 12,
+          "y": 0
+        },{
+          "x": 0,
+          "y": 0
+        }]
+      },
+      "material": {
+        "color": {
+          "r": 0.95,
+          "g": 0.95,
+          "b": 0.95
+        },
+        "wireframe": false,
+        "reflectivity": 0.5,
+        "roughness": 1.0
+      },
+      "physics": {
+        "enabled": false,
+        "mass": 1
+      },
+      "decals": []
+    }
+  ],
+  "gltf": [
+
+  ]
+}

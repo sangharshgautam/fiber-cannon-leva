@@ -1,4 +1,3 @@
-import DecalData from "./../store/DecalData";
 import {
     BoxGeometry,
     BufferGeometry,
@@ -15,10 +14,11 @@ import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
 import {useLoader, useThree} from "@react-three/fiber";
 import {MeshPhysicalMaterialParameters} from "three/src/materials/MeshPhysicalMaterial";
 import {useTexture} from "@react-three/drei";
+import DecalConfig from "../models/DecalConfig";
 
 export interface MyDecalProps {
     mesh: Mesh;
-    decalData: DecalData;
+    decalData: DecalConfig;
 }
 const MyDecal = (props: MyDecalProps) => {
     // console.log(props.mesh.geometry.isBufferGeometry);

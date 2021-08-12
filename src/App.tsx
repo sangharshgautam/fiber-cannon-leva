@@ -5,55 +5,55 @@ import { Html, OrbitControls, TransformControls } from "@react-three/drei"
 import './App.css';
 import {ACESFilmicToneMapping, Color, Vector3} from "three";
 import BasicScene from "./scene/BasicScene";
-import {ObjectData} from "./store/ObjectStore";
-import Plane from "./shapes/Plane";
-import Cube from "./shapes/Cube";
-import NPoint from "./shapes/NPoint";
-import {LightConfig} from "./store/LightConfig";
-import {CameraConfig} from "./store/CameraConfig";
-import {buttonGroup, useControls} from "leva";
-import {InputIcon} from "@radix-ui/react-icons";
-
+import {LightConfig} from "./models/LightConfig";
+import sceneConfig from "./scenes/model.json";
+import {SceneConfig} from "./models/SceneConfig";
+import create from "zustand";
+import {ObjectConfig} from "./models/ObjectConfig";
+import {combineAndImmer} from "./store/ObjectStore";
 
 const Fallback = () => (
     <Html>
         <div className="loading">Loading...</div>
     </Html>
 )
-
+const config: SceneConfig = sceneConfig as any;
+export const useObjectStore = create(
+    combineAndImmer({objects: config.objects, models: config.models}, (set) => ({
+        updateObject: (object: ObjectConfig, index: number) =>
+            set((state) => {
+                // state.objects[index] = object;
+            }),
+        addObject: (object: ObjectConfig) =>
+            set((state) => {
+                // state.objects.push(object);
+            })
+    }))
+);
 function App() {
+
     const [selectedObject, setSelectedObject] = useState<THREE.Object3D>();
-    const lights: Array<LightConfig> = [
-        {
-            index: 0,
-            position: [0, 0, 0],
-            color: 'indianred'
-        },
-        {
-            index: 1,
-            position: [10, 10, -10],
-            color: 'orange'
-        },
-        {
-            index: 2,
-            position: [-10, -10, 10],
-            color: 'lightblue'
-        }
-    ];
+
     const renderLight = (config: LightConfig, index: number) => {
-        return <pointLight key={config.index} position={config.position} color={new Color(config.color)} />;
+        if(config.type === "Hemisphere"){
+            return <hemisphereLight args={[0xffffff, 0x444444]} position={config.position} />
+        }
+        if(config.type === "Directional") {
+            return <directionalLight args={[0xffffff]} position={config.position} />
+        }
+        return <pointLight args={[config.args]} key={index} position={config.position}/>;
     }
     return (
         <>
             <canvas id="canvas-hoverinc" style={{width: 500, height: 500, background: "white", display: "none"}}></canvas>
-            <Canvas id={"canvas-webgl"} style={{ background: "#BFD1E5"}}
-                    camera={{position: [10, 5, 10], rotation: [0, 0, 0], fov: 50}}
-                    gl={{alpha: true}}
+            <Canvas id={"canvas-webgl"} style={config.canvas}
+                    camera={config.camera}
+                    gl={config.gl}
                     // raycaster={{ filter: (intersects, state) => intersects.reverse()}}
             >
 
                 <axesHelper args={[20]}/>
-                {lights.map(renderLight)}
+                {config.lights.map(renderLight)}
                 <Suspense fallback={<Fallback />}>
                     <BasicScene />
                 </Suspense>
