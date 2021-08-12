@@ -2,35 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70cbf48c-112f-4ac3-8d37-822e1d88a4ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/CanvasConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/ColorConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/DecalConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/GeometryConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/GltfConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/MaterialConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/ObjectConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/PhysicsConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/SceneConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/SceneState.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/TransformConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/TwoDPointConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/WebGlConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scenes/model.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scenes/table_chair.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scenes/webgl_animation_skinning_additive_blending.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shapes/Extruded.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/Cameraah.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/loader/ObjectLoader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shapes/Cube.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/Cube.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shapes/NPoint.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/NPoint.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shapes/Plane.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shapes/Plane.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/CameraConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/CameraConfig.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/DecalData.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/LightConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/LightConfig.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/ObjectStore.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/ObjectStore.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/MyDecal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loader/ModelLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/GltfConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ModelConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SceneConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SceneConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/three-extension/TransformControlsLock.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +94,7 @@
       <workItem from="1620887849937" duration="19927000" />
       <workItem from="1621006718809" duration="842000" />
       <workItem from="1628665615532" duration="15554000" />
-      <workItem from="1628752931227" duration="10738000" />
+      <workItem from="1628752931227" duration="13398000" />
     </task>
     <servers />
   </component>

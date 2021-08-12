@@ -1,5 +1,5 @@
 import {TransformConfig} from "./TransformConfig";
 
-export interface GltfConfig extends TransformConfig{
+export interface ModelConfig extends TransformConfig{
     url: string;
 }

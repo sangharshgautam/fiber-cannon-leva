@@ -19,8 +19,9 @@ import {HDRCubeTextureLoader} from "three/examples/jsm/loaders/HDRCubeTextureLoa
 import {ObjectConfig} from "../models/ObjectConfig";
 import {useObjectStore} from "../App";
 import Extruded from "../shapes/Extruded";
-import {GltfConfig} from "../models/GltfConfig";
+import {ModelConfig} from "../models/ModelConfig";
 import ModelLoader from "../loader/ModelLoader";
+import ObjectLoader from "../loader/ObjectLoader";
 
 
 const TransformControlsLock = () => {
@@ -196,7 +197,7 @@ const TransformControlsLock = () => {
 
 
     const objects: ObjectConfig[] = useObjectStore((state: any) => state.objects);
-    const models: GltfConfig[] = useObjectStore((state: any) => state.models);
+    const models: ModelConfig[] = useObjectStore((state: any) => state.models);
 
     const onPointerDown = (event: PointerEvent) => {
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -214,21 +215,7 @@ const TransformControlsLock = () => {
 
     }
     document.addEventListener( 'pointerdown', onPointerDown );
-    const renderModel = (modelConfig: GltfConfig, index: number) => {
-        return <ModelLoader key={index}  {...modelConfig}></ModelLoader>
-    }
-    const renderObject = (objectData: ObjectConfig, index: number) => {
-        switch (objectData.type) {
-            case "Plane":
-                return <Plane key={index} {...objectData}/>;
-            case "Cube":
-                return <Cube key={index} {...objectData}/>;
-            case "Extruded":
-                return <Extruded key={index} {...objectData}/>;
-            case "NPoint":
-                return <NPoint key={index} {...objectData}/>;
-        }
-    }
+
     return (
         <>
             {selectedObject && <MyTransformControls
@@ -269,10 +256,9 @@ const TransformControlsLock = () => {
                 // minDistance={-500}
                 // maxDistance={1000}
             />
-            {models.map(renderModel)}
-            {/*<Environment preset="sunset" background/>*/}
-            {/*<Dodecahedron time={0} />*/}
-            {objects.map(renderObject)}
+            {/*{models.map((model, index) => <ModelLoader key={index}  {...model}></ModelLoader>)}*/}
+            <Environment preset="sunset" background/>
+            {objects.map((object, index) => <ObjectLoader key={index} {...object}></ObjectLoader>)}
             {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
         </>
 

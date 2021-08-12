@@ -3,9 +3,9 @@ import {TextureLoader} from "three";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import React, {useState} from "react";
-import {GltfConfig} from "../models/GltfConfig";
+import {ModelConfig} from "../models/ModelConfig";
 
-const ModelLoader = (modelConfig: GltfConfig) => {
+const ModelLoader = (modelConfig: ModelConfig, index: number) => {
     const [position, setPosition] = useState(modelConfig.position);
     const [rotation, setRotation] = useState(modelConfig.rotation);
     const [scale, setScale] = useState(modelConfig.scale);
@@ -13,7 +13,7 @@ const ModelLoader = (modelConfig: GltfConfig) => {
     const { raycaster, mouse, camera, scene, gl } = useThree();
     // @ts-ignore
     // const envMap = useLoader(HDRCubeTextureLoader, ['assets/hoverinc/street-by-water.hdr']);
-    const envMapLDR = useLoader(TextureLoader, 'assets/hoverinc/envmap.jpg');
+    // const envMapLDR = useLoader(TextureLoader, 'assets/hoverinc/envmap.jpg');
     const gltf = useLoader(GLTFLoader, modelConfig.url);
     const model = gltf.scene;
     model.scale.set(modelConfig.scale[0], modelConfig.scale[1], modelConfig.scale[2]);
@@ -58,6 +58,6 @@ const ModelLoader = (modelConfig: GltfConfig) => {
             }
         }
     }
-    return(<primitive object={model}></primitive>)
+    return(<primitive key={index} object={model}></primitive>)
 }
 export default ModelLoader;

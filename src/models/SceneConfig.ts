@@ -3,7 +3,7 @@ import {LightConfig} from "./LightConfig";
 import {WebGlConfig} from "./WebGlConfig";
 import {ObjectConfig} from "./ObjectConfig";
 import {CanvasConfig} from "./CanvasConfig";
-import {GltfConfig} from "./GltfConfig";
+import {ModelConfig} from "./ModelConfig";
 
 export interface SceneConfig {
     canvas: CanvasConfig;
@@ -11,5 +11,5 @@ export interface SceneConfig {
     camera: CameraConfig;
     lights: LightConfig[];
     objects: ObjectConfig[];
-    models: GltfConfig[];
+    models: ModelConfig[];
 }
