@@ -6,7 +6,7 @@ import create, {
     // StateCreator
 } from "zustand";
 import produce from "immer";
-import {ObjectConfig} from "../models/ObjectConfig";
+import {BlockConfig} from "../models/BlockConfig";
 
 type StateCreator<
     T extends State,

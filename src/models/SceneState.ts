@@ -1,6 +1,6 @@
 import {State} from "zustand";
-import {ObjectConfig} from "./ObjectConfig";
+import {BlockConfig} from "./BlockConfig";
 
 export interface SceneState extends State {
-    objects: ObjectConfig[]
+    objects: BlockConfig[]
 }

@@ -1,8 +1,13 @@
-import {ObjectConfig} from "./ObjectConfig";
+import {BlockConfig} from "./BlockConfig";
 import {TransformConfig} from "./TransformConfig";
+import {PhysicsConfig} from "./PhysicsConfig";
 
-export interface GroupConfig extends TransformConfig {
+export interface GroupConfig {
     name: string;
     castShadow: boolean;
-    objects: ObjectConfig[];
+    receiveShadow: boolean;
+    transform: TransformConfig;
+    objects: BlockConfig[];
+    physics: PhysicsConfig;
+    disabled: boolean;
 }

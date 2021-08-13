@@ -5,10 +5,10 @@ import {PhysicsConfig} from "./PhysicsConfig";
 import DecalConfig from "./DecalConfig";
 import {State} from "zustand";
 
-export interface ObjectConfig extends State {
+export interface BlockConfig extends TransformConfig {
     uuid: string;
     name: string;
-    type: 'Plane'| 'Cube' | 'NPoint' | 'Cylinder' | 'Extruded' | 'Lathe';
+    type: 'Box' | 'Circle' | 'Cone' | 'Cylinder' | 'Dodecahedron'| 'Edges' | 'Extruded' | 'Ground' | 'Icosahedron' | 'Lathe' | 'Octahedron' | 'Parametric' | 'Plane'| 'Polyhedron' | 'Ring' | 'Shape' | 'Sphere' | 'Tetrahedron' | 'Text' | 'Torus' | 'TorusKnot' | 'Tube' | 'Wireframe';
     castShadow: boolean;
     transform: TransformConfig;
     geometry: GeometryConfig;

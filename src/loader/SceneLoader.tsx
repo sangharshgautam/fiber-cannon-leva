@@ -1,4 +1,4 @@
-import {Physics} from "@react-three/cannon";
+import {Physics, useBox, usePlane} from "@react-three/cannon";
 import React, {useEffect, useState} from "react";
 import {button, buttonGroup, folder, LevaInputs, useControls} from "leva";
 import niceColors from 'nice-color-palettes'
@@ -9,10 +9,10 @@ import {DimensionsIcon, InputIcon} from "@radix-ui/react-icons";
 //@ts-ignore
 import { RayTracingRenderer } from 'ray-tracing-renderer'
 import {useTransform} from "leva/plugin";
+import {SceneConfig} from "../models/SceneConfig";
 
 
-// @ts-ignore
-const BasicScene = () => {
+const SceneLoader = (config: SceneConfig) => {
     const { raycaster, mouse, camera, scene, gl } = useThree();
 
 
@@ -102,16 +102,29 @@ const BasicScene = () => {
             }
         }
     }));
-    return (
+    function Plane(props: any) {
+        const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+        return (
+            <mesh ref={ref}>
+                <planeBufferGeometry args={[100, 100]} />
+            </mesh>
+        )
+    }
 
-        <>
-            <Physics>
-                <TransformControlsLock></TransformControlsLock>
-                {/*<Dodecahedron time={0}/>*/}
-            </Physics>
-            {/*<canvas ref={canvasRef}></canvas>*/}
-        </>
+    function Cube(props: any) {
+        const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }))
+        return (
+            <mesh ref={ref}>
+                <boxBufferGeometry />
+            </mesh>
+        )
+    }
+
+    return (
+        <Physics>
+            <TransformControlsLock></TransformControlsLock>
+        </Physics>
 
     )
 }
-export default BasicScene;
+export default SceneLoader;

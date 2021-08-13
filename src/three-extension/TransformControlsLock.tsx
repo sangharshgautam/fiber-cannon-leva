@@ -9,15 +9,35 @@ import {CubeTextureLoader, Object3D, TextureLoader, Vector2, Vector3} from "thre
 import {DimensionsIcon} from "@radix-ui/react-icons";
 import { Environment } from '@react-three/drei'
 import {HDRCubeTextureLoader} from "three/examples/jsm/loaders/HDRCubeTextureLoader";
-import {ObjectConfig} from "../models/ObjectConfig";
+import {BlockConfig} from "../models/BlockConfig";
 import {useObjectStore} from "../App";
 import {ModelConfig} from "../models/ModelConfig";
 import ModelLoader from "../loader/ModelLoader";
-import ObjectLoader from "../loader/ObjectLoader";
 import {GroupConfig} from "../models/GroupConfig";
 import GroupLoader from "../loader/GroupLoader";
+import {useBox, usePlane} from "@react-three/cannon";
 
+function Plane(props: any) {
+    const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+    return (
+        <mesh ref={ref}>
+            <planeBufferGeometry args={[100, 100]} />
+        </mesh>
+    )
+}
 
+function Cube(props: any) {
+    const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }))
+    return (
+        <group ref={ref}>
+            <mesh position={[5, 0, 5]}>
+                <boxBufferGeometry />
+                <meshPhysicalMaterial color={"#AA874D"}></meshPhysicalMaterial>
+            </mesh>
+        </group>
+
+    )
+}
 const TransformControlsLock = () => {
 
     const { raycaster, mouse, camera, scene, gl } = useThree();
@@ -89,14 +109,14 @@ const TransformControlsLock = () => {
             const callback = (event: any) => {
                 orbitControls.current.enabled = !event.value;
                 if (mode === "translate" && !event.value) {
-                    setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
+                    // setTransform({position: (transformControls.current?.object as THREE.Object3D).position.toArray()});
                 }
                 if (mode === "rotate" && !event.value) {
                     const orientation = (transformControls.current?.object as THREE.Object3D).rotation;
-                    setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
+                    // setTransform({rotation: [orientation.x, orientation.y, orientation.z]});
                 }
                 if (mode === "scale" && !event.value) {
-                    setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
+                    // setTransform({scale: (transformControls.current?.object as THREE.Object3D).scale.toArray()});
                 }
             }
             controls.addEventListener('dragging-changed', callback)
@@ -176,7 +196,7 @@ const TransformControlsLock = () => {
 
 
 
-    const objects: ObjectConfig[] = useObjectStore((state: any) => state.objects);
+    const objects: BlockConfig[] = useObjectStore((state: any) => state.objects);
     const models: ModelConfig[] = useObjectStore((state: any) => state.models);
     const groups: GroupConfig[] = useObjectStore((state: any) => state.groups);
 
@@ -185,7 +205,7 @@ const TransformControlsLock = () => {
         mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.type === 'Mesh' || intersect.object.type === 'Group');
+        const intersects = raycaster.intersectObjects(scene.children).filter(intersect => intersect.object.type === 'Group');
         // .sort((a, b) => a.distance < b.distance ? 1: -1);
         if (intersects.length) {
             const object = intersects[0].object;
@@ -196,6 +216,7 @@ const TransformControlsLock = () => {
 
     }
     document.addEventListener( 'pointerdown', onPointerDown );
+
 
     return (
         <>
@@ -237,11 +258,12 @@ const TransformControlsLock = () => {
                 // minDistance={-500}
                 // maxDistance={1000}
             />
-            {models.map((model, index) => <ModelLoader key={index}  {...model}></ModelLoader>)}
+            {/*{models.map((model, index) => <ModelLoader key={index}  {...model}></ModelLoader>)}*/}
             <Environment preset="sunset" background/>
-            {objects.map((object, index) => <ObjectLoader key={index} {...object}></ObjectLoader>)}
-            {groups.map((group, index) => <GroupLoader key={index} {...group}></GroupLoader>)}
-            {/*<Plane color={niceColors[17][1]} args={[20,20]} position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]}/>*/}
+            {/*{objects.map((object, index) => <ObjectLoader key={index} {...object}></ObjectLoader>)}*/}
+            <Plane></Plane>
+            {groups.filter(group=> group.disabled !== true).map((group, index) => <GroupLoader key={index} {...group}></GroupLoader>)}
+
         </>
 
         )

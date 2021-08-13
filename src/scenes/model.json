@@ -45,19 +45,59 @@
   ],
   "groups": [
     {
-      "name": "Room",
-      "position": [0, 0, 0],
-      "rotation": [0, 0, 0],
-      "scale": [1, 1, 1],
+      "name": "Test",
+      "disabled": true,
+      "transform": {
+        "position": [5, 0, 5],
+        "rotation": [-1.57, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "castShadow": false,
+      "receiveShadow": true,
       "physics": {
         "enabled": true,
-        "mass": 1
+        "mass": 0
+      },
+      "objects": [
+        {
+          "name": "Floor",
+          "type": "Box",
+          "transform": {
+            "position": [10, 0, 10],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+          },
+          "geometry": {
+            "args": [1, 1, 1]
+          },
+          "material": {
+            "color": "#FFFFFF",
+            "wireframe": false,
+            "reflectivity": 0.5,
+            "roughness": 1.0
+          },
+          "decals": []
+        }
+      ]
+    },
+    {
+      "name": "Room",
+      "disabled": false,
+      "transform": {
+        "position": [0, 0, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "castShadow": false,
+      "receiveShadow": true,
+      "physics": {
+        "enabled": true,
+        "mass": 0
       },
       "objects": [
         {
           "name": "Floor",
           "type": "Plane",
-          "castShadow": false,
           "transform": {
             "position": [10, 0, 10],
             "rotation": [-1.57, 0, 0],
@@ -72,16 +112,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": true,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Left Wall",
           "type": "Plane",
-          "castShadow": false,
           "transform": {
             "position": [10, 10, 0],
             "rotation": [0, 0, 0],
@@ -96,16 +131,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": true,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Right Wall",
           "type": "Plane",
-          "castShadow": false,
           "transform": {
             "position": [0, 10, 10],
             "rotation": [0, 1.57, 0],
@@ -120,19 +150,20 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         }
       ]
     },
     {
       "name": "Table",
-      "position": [2, 3, 10],
-      "rotation": [0, 0, 0],
-      "scale": [0.5, 0.5, 0.5],
+      "disabled": false,
+      "transform": {
+        "position": [5, 2, 5],
+        "rotation": [0, 0, 0],
+        "scale": [0.5, 0.5, 0.5]
+      },
+      "castShadow": false,
+      "receiveShadow": true,
       "physics": {
         "enabled": true,
         "mass": 1
@@ -140,7 +171,7 @@
       "objects": [
         {
           "name": "Table Leg 1",
-          "type": "Cube",
+          "type": "Box",
           "castShadow": true,
           "transform": {
             "position": [4, 3, 4],
@@ -156,15 +187,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Table Leg 2",
-          "type": "Cube",
+          "type": "Box",
           "castShadow": true,
           "transform": {
             "position": [4, 3, 12],
@@ -180,15 +207,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Table Leg 3",
-          "type": "Cube",
+          "type": "Box",
           "castShadow": true,
           "transform": {
             "position": [8, 3, 12],
@@ -204,15 +227,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
-        },{
+        },
+        {
           "name": "Table Leg 4",
-          "type": "Cube",
-          "castShadow": true,
+          "type": "Box",
           "transform": {
             "position": [8, 3, 4],
             "rotation": [0, 0, 0],
@@ -227,16 +246,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Table Top",
           "type": "Extruded",
-          "castShadow": true,
           "transform": {
             "position": [3, 6, 3],
             "rotation": [0, 0, 0],
@@ -251,19 +265,20 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         }
       ]
     },
     {
       "name": "Chair",
-      "position": [10, 3, 10],
-      "rotation": [0, 0, 0],
-      "scale": [0.5, 0.5, 0.5],
+      "disabled": false,
+      "transform": {
+        "position": [10, 3, 10],
+        "rotation": [0, 0, 0],
+        "scale": [0.5, 0.5, 0.5]
+      },
+      "castShadow": true,
+      "receiveShadow": true,
       "physics": {
         "enabled": true,
         "mass": 1
@@ -272,7 +287,6 @@
         {
           "name": "Chair Leg 1",
           "type": "Extruded",
-          "castShadow": true,
           "transform": {
             "position": [4, 0, 4],
             "rotation": [0, 0, 0],
@@ -286,10 +300,6 @@
             "wireframe": false,
             "reflectivity": 0.5,
             "roughness": 1.0
-          },
-          "physics": {
-            "enabled": false,
-            "mass": 0
           },
           "decals": []
         },
@@ -311,10 +321,6 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
@@ -335,10 +341,6 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },{
           "name": "Table Leg 4",
@@ -357,10 +359,6 @@
             "wireframe": false,
             "reflectivity": 0.5,
             "roughness": 1.0
-          },
-          "physics": {
-            "enabled": false,
-            "mass": 0
           },
           "decals": []
         },
@@ -382,19 +380,20 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         }
       ]
     },
     {
       "name": "Lamp",
-      "position": [2, 1, 8],
-      "rotation": [0, 0, 0],
-      "scale": [0.1, 0.1, 0.1],
+      "disabled": false,
+      "transform": {
+        "position": [2, 1, 8],
+        "rotation": [0, 0, 0],
+        "scale": [0.1, 0.1, 0.1]
+      },
+      "castShadow": true,
+      "receiveShadow": true,
       "physics": {
         "enabled": true,
         "mass": 1
@@ -403,7 +402,6 @@
         {
           "name": "Lamp Base",
           "type": "Cylinder",
-          "castShadow": true,
           "transform": {
             "position": [3, 1, 2],
             "rotation": [0, 0, 0],
@@ -418,16 +416,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Lamp Rod",
           "type": "Cylinder",
-          "castShadow": true,
           "transform": {
             "position": [3, 50, 3],
             "rotation": [0, 0, 0],
@@ -442,16 +435,11 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         },
         {
           "name": "Lamp Shade",
           "type": "Lathe",
-          "castShadow": true,
           "transform": {
             "position": [3, 95, 2],
             "rotation": [3.14, 0, 0],
@@ -466,22 +454,23 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
           "decals": []
         }
       ]
     },
     {
       "name": "Wall 1 Painting",
-      "position": [4, 10, 0.5],
-      "rotation": [0, 0, 0],
-      "scale": [2, 2, 2],
+      "disabled": false,
+      "transform": {
+        "position": [4, 10, 0.5],
+        "rotation": [0, 0, 0],
+        "scale": [2, 2, 2]
+      },
+      "castShadow": true,
+      "receiveShadow": true,
       "physics": {
         "enabled": true,
-        "mass": 1
+        "mass": 0
       },
       "objects": [
         {
@@ -502,23 +491,7 @@
             "reflectivity": 0.5,
             "roughness": 1.0
           },
-          "physics": {
-            "enabled": false,
-            "mass": 0
-          },
-          "decals": [{
-            "transform": {
-              "position": [4.32, -0.68, 5.46],
-              "rotation": [0, 0, 0],
-              "scale": [5, 5, 5]
-            },
-            "material": {
-              "color": "#4316ba",
-              "wireframe": false,
-              "reflectivity": 0.5,
-              "roughness": 1.0
-            }
-          }]
+          "decals": []
         }
       ]
     }

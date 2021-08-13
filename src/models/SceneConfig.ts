@@ -1,7 +1,7 @@
 import {CameraConfig} from "./CameraConfig";
 import {LightConfig} from "./LightConfig";
 import {WebGlConfig} from "./WebGlConfig";
-import {ObjectConfig} from "./ObjectConfig";
+import {BlockConfig} from "./BlockConfig";
 import {CanvasConfig} from "./CanvasConfig";
 import {ModelConfig} from "./ModelConfig";
 import {GroupConfig} from "./GroupConfig";
@@ -11,7 +11,7 @@ export interface SceneConfig {
     gl: WebGlConfig;
     camera: CameraConfig;
     lights: LightConfig[];
-    objects: ObjectConfig[];
+    objects: BlockConfig[];
     models: ModelConfig[];
     groups: GroupConfig[];
 }

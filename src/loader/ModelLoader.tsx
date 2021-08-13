@@ -29,7 +29,6 @@ const ModelLoader = (modelConfig: ModelConfig, index: number) => {
             child.material.transparent = true;
         }
     });
-    console.log(model);
     model.userData ={
         controls: {
             transform: {
